@@ -17,10 +17,30 @@
     align-items: center;
 }
 
-.nav-logo {
+/* .nav-logo {
     font-size: 2rem;
-    font-weight: 900;
+    font-weight: 600;
     text-transform: uppercase;
+}
+
+.nav-logo img {
+    height: 4rem;
+    width: auto;
+    display: block; 
+} */
+
+.nav-logo {
+    display: flex; /* Membuat logo dan teks sejajar */
+    align-items: center; /* Menyelaraskan secara vertikal di tengah */
+    gap: 0px; /* Memberi jarak antara logo dan teks */
+    font-size: 1.5rem; /* Ukuran font disesuaikan agar seimbang */
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.nav-logo img {
+    height: 6rem; /* Ukuran logo disesuaikan agar seimbang */
+    width: auto;
 }
 
 .nav-menu {
