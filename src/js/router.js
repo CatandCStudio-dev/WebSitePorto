@@ -4,7 +4,11 @@ const routes = {
 
 const hidePreload = () => {
     const preload = document.getElementById('preload');
-    if (preload) preload.style.display = 'none';
+    if (preload) {
+        setTimeout(() => {
+            preload.style.display = 'none';
+        }, 2000); // Delay 2 detik
+    }
 };
 
 const loadPage = async () => {
