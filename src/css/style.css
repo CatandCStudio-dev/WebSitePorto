@@ -35,3 +35,19 @@ a {
 ul {
     list-style: none;
 }
+
+#preload {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    z-index: 9999;
+}
+
+#preload img {
+    width: 700px;   /* Ubah sesuai kebutuhan */
+    height: 700px;  /* Ubah sesuai kebutuhan */
+    object-fit: contain;
+}
