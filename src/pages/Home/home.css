@@ -17,29 +17,17 @@
     align-items: center;
 }
 
-/* .nav-logo {
-    font-size: 2rem;
-    font-weight: 600;
-    text-transform: uppercase;
-}
-
-.nav-logo img {
-    height: 4rem;
-    width: auto;
-    display: block; 
-} */
-
 .nav-logo {
     display: flex; /* Membuat logo dan teks sejajar */
     align-items: center; /* Menyelaraskan secara vertikal di tengah */
-    gap: 0px; /* Memberi jarak antara logo dan teks */
+    gap: 8px; /* Memberi jarak antara logo dan teks */
     font-size: 1.5rem; /* Ukuran font disesuaikan agar seimbang */
     font-weight: 600;
     text-transform: uppercase;
 }
 
 .nav-logo img {
-    height: 6rem; /* Ukuran logo disesuaikan agar seimbang */
+    height: 4rem; /* Ukuran logo disesuaikan agar seimbang */
     width: auto;
 }
 
@@ -220,18 +208,6 @@
     gap: 30px;
 }
 
-/* .service-card {
-    background-color: #2a2a3c;
-    border-radius: 10px;
-    padding: 30px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.service-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-} */
-
 .service-card {
     background-color: transparent; /* Diubah menjadi transparan */
     border: 2px solid rgba(255, 255, 255, 0.2); /* Tambahkan outline/border tipis */
@@ -282,23 +258,6 @@
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
 }
-
-/* .project-card {
-    background-color: #2a2a3c;
-    border-radius: 10px;
-    overflow: hidden;
-    position: relative;
-    cursor: pointer;
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-    
-    opacity: 0;
-    transform: translateY(50px);
-}
-
-.project-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-} */
 
 .project-card {
     background-color: transparent; /* Diubah menjadi transparan */
