@@ -47,8 +47,8 @@ ul {
 }
 
 #preload img {
-    width: 400px;   /* Ubah sesuai kebutuhan */
-    height: 400px;  /* Ubah sesuai kebutuhan */
+    width: 200px;   /* Ubah sesuai kebutuhan */
+    height: 200px;  /* Ubah sesuai kebutuhan */
     object-fit: contain;
 }
 
