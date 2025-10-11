@@ -21,13 +21,13 @@
     display: flex; /* Membuat logo dan teks sejajar */
     align-items: center; /* Menyelaraskan secara vertikal di tengah */
     gap: 8px; /* Memberi jarak antara logo dan teks */
-    font-size: 1.5rem; /* Ukuran font disesuaikan agar seimbang */
+    font-size: 1.3rem; /* Ukuran font disesuaikan agar seimbang */
     font-weight: 600;
     text-transform: uppercase;
 }
 
 .nav-logo img {
-    height: 4rem; /* Ukuran logo disesuaikan agar seimbang */
+    height: 3rem; /* Ukuran logo disesuaikan agar seimbang */
     width: auto;
 }
 
@@ -121,7 +121,7 @@
 }
 
 .hero-content h1 {
-    font-size: 4rem;
+    font-size: 3rem;
     font-weight: 900;
     line-height: 1.2;
     margin-bottom: 30px;
@@ -137,7 +137,7 @@
     font-weight: 700;
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
-    border-radius: 16px;
+    border-radius: 8px;
 }
 
 .cta-button:hover {

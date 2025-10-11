@@ -42,12 +42,12 @@ ul {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #fff;
+    background: rgb(20, 30, 48);
     z-index: 9999;
 }
 
 #preload img {
-    width: 700px;   /* Ubah sesuai kebutuhan */
-    height: 700px;  /* Ubah sesuai kebutuhan */
+    width: 400px;   /* Ubah sesuai kebutuhan */
+    height: 400px;  /* Ubah sesuai kebutuhan */
     object-fit: contain;
 }
