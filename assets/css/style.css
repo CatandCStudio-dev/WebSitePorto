@@ -3,7 +3,7 @@
 :root {
     --primary-color: #ffffff;
     --secondary-color: #cccccc;
-    --background-color: #1a1a2e; /* Warna biru tua dari gambar */
+    --background-color: rgb(20, 30, 48); /* Warna biru tua dari gambar */
     --button-bg-color: transparent;
     --button-border-color: #ffffff;
 }
@@ -47,8 +47,8 @@ ul {
 }
 
 #preload img {
-    width: 200px;   /* Ubah sesuai kebutuhan */
-    height: 200px;  /* Ubah sesuai kebutuhan */
+    width: 80px;   /* Ubah sesuai kebutuhan */
+    height: 80px;  /* Ubah sesuai kebutuhan */
     object-fit: contain;
 }
 
@@ -123,4 +123,51 @@ ul {
 
 .dropdown-menu li {
     padding: 10px 20px;
+}
+
+/* scroll indicator */
+.scroll-indicator {
+    position: fixed; /* Diubah dari absolute menjadi fixed */
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 35px;
+    border: 2px solid var(--primary-color);
+    border-radius: 20px;
+    
+    /* Properti baru untuk animasi */
+    opacity: 0; /* Awalnya tidak terlihat */
+    transition: opacity 0.5s ease-in-out;
+    z-index: 1000;
+}
+
+/* Kelas baru untuk memunculkan indikator */
+.scroll-indicator.visible {
+    opacity: 1;
+}
+
+.scroll-indicator span {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 8px;
+    background-color: var(--primary-color);
+    animation: scroll-down 2s infinite;
+}
+
+@keyframes scroll-down {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -4px);
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, 4px);
+    }
 }

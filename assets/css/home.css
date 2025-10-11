@@ -48,7 +48,7 @@
 
 .hero-content h1 {
     font-size: 3rem;
-    font-weight: 900;
+    font-weight: 620;
     line-height: 1.2;
     margin-bottom: 30px;
     color: var(--primary-color);
@@ -63,60 +63,13 @@
     font-weight: 700;
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
-    border-radius: 8px;
+    border-radius: 12px;
 }
 
 .cta-button:hover {
     background-color: var(--primary-color);
     color: var(--background-color);
 }
-
-.scroll-indicator {
-    position: fixed; /* Diubah dari absolute menjadi fixed */
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 20px;
-    height: 35px;
-    border: 2px solid var(--primary-color);
-    border-radius: 20px;
-    
-    /* Properti baru untuk animasi */
-    opacity: 0; /* Awalnya tidak terlihat */
-    transition: opacity 0.5s ease-in-out;
-    z-index: 1000;
-}
-
-/* Kelas baru untuk memunculkan indikator */
-.scroll-indicator.visible {
-    opacity: 1;
-}
-
-.scroll-indicator span {
-    position: absolute;
-    top: 8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 2px;
-    height: 8px;
-    background-color: var(--primary-color);
-    animation: scroll-down 2s infinite;
-}
-
-@keyframes scroll-down {
-    0% {
-        opacity: 0;
-        transform: translate(-50%, -4px);
-    }
-    50% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-        transform: translate(-50%, 4px);
-    }
-}
-
 
 /* =========================================== */
 /* ====== Styling untuk Services Section ===== */
@@ -132,15 +85,6 @@
     /* Membuat 2 kolom di layar besar, dan 1 kolom di layar kecil */
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 30px;
-}
-
-.service-card {
-    background-color: transparent; /* Diubah menjadi transparan */
-    border: 2px solid rgba(255, 255, 255, 0.2); /* Tambahkan outline/border tipis */
-    border-radius: 16px;
-    padding: 30px;
-    /* Tambahkan 'background-color' ke transisi agar mulus */
-    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
 .service-card {
@@ -217,23 +161,19 @@
 }
 
 .project-card {
-    background-color: transparent; /* Diubah menjadi transparan */
-    border: 2px solid rgba(255, 255, 255, 0.2); /* Tambahkan outline/border tipis */
+    background-color: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.2);
     border-radius: 16px;
-    overflow: hidden;
-    position: relative;
-    cursor: pointer;
-    /* Tambahkan 'background-color' ke transisi agar mulus */
-    transition: transform 0.4s ease, box-shadow 0.4s ease, background-color 0.4s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
     
-    /* State awal untuk animasi (tidak terlihat) */
-    opacity: 0;
-    transform: translateY(50px);
+    /* Tambahan untuk efek paw.png */
+    position: relative; /* Penting agar elemen pseudo bisa diposisikan relatif terhadap card */
+    overflow: hidden; /* Penting agar paw tidak terlihat sebelum muncul */
 }
 
 .project-card:hover {
     background-color: #3b3b57; /* Tambahkan background-color saat hover */
-    transform: scale(1.05);
+    transform: translateY(-10px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
@@ -257,12 +197,6 @@
     opacity: 1; /* Menjadi terlihat */
 }
 
-/* State akhir untuk animasi (terlihat) */
-.project-card.show {
-    opacity: 1;
-    transform: translateY(0);
-}
-
 .project-card img {
     width: 100%;
     height: 220px;
@@ -276,10 +210,14 @@
 
 .project-card h3 {
     font-size: 1.5rem;
-    margin-bottom: 5px;
+    padding-left: 8px;
+    padding-right: 8px;
 }
 
 .project-card p {
     color: var(--secondary-color);
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-bottom: 12px;
     font-size: 0.9rem;
 }

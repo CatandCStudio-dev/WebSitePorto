@@ -12,51 +12,55 @@ main .project-section {
     padding-bottom: 100px; /* Jarak di bagian bawah halaman */
 }
 
-/* Mengatur ulang layout grid untuk halaman portfolio */
-.project-grid {
-    display: grid;
-    /* Membuat kolom yang responsif */
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 30px; /* Jarak antar kartu */
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-bottom: 60px;
+    color: var(--primary-color);
 }
 
-/* Styling dasar untuk setiap kartu proyek */
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
 .project-card {
     background-color: transparent;
     border: 2px solid rgba(255, 255, 255, 0.2);
     border-radius: 16px;
-    overflow: hidden;
-    position: relative;
-    cursor: pointer;
-    transition: transform 0.4s ease, box-shadow 0.4s ease, background-color 0.4s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
     
-    /* Animasi muncul saat di-load (opsional, tapi disarankan) */
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeIn 0.6s ease-out forwards;
+    /* Tambahan untuk efek paw.png */
+    position: relative; /* Penting agar elemen pseudo bisa diposisikan relatif terhadap card */
+    overflow: hidden; /* Penting agar paw tidak terlihat sebelum muncul */
 }
-
-/* Animasi keyframes untuk fade-in */
-@keyframes fadeIn {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Memberi delay animasi pada setiap kartu agar muncul satu per satu */
-.project-card:nth-child(1) { animation-delay: 0.1s; }
-.project-card:nth-child(2) { animation-delay: 0.2s; }
-.project-card:nth-child(3) { animation-delay: 0.3s; }
-.project-card:nth-child(4) { animation-delay: 0.4s; }
-.project-card:nth-child(5) { animation-delay: 0.5s; }
-.project-card:nth-child(6) { animation-delay: 0.6s; }
-
 
 .project-card:hover {
-    background-color: #3b3b57;
-    transform: scale(1.05) !important; /* Gunakan !important untuk menimpa transform dari animasi */
+    background-color: #3b3b57; /* Tambahkan background-color saat hover */
+    transform: translateY(-10px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Efek Paw.png untuk Project Card */
+.project-card::after {
+    content: '';
+    position: absolute;
+    bottom: -32px; /* Awalnya di luar, 32px adalah tinggi paw */
+    right: -32px;  /* Awalnya di luar, 32px adalah lebar paw */
+    width: 42px;
+    height: 42px;
+    background-image: url('../media/paw64.png'); /* Sesuaikan path jika berbeda */
+    background-size: cover;
+    transition: all 0.3s ease-out; /* Transisi untuk muncul */
+    opacity: 0; /* Awalnya tidak terlihat */
+}
+
+.project-card:hover::after {
+    bottom: 0px; /* Posisi akhir dari bawah */
+    right: 15px; /* Posisi akhir dari kanan */
+    opacity: 1; /* Menjadi terlihat */
 }
 
 .project-card img {
@@ -72,19 +76,14 @@ main .project-section {
 
 .project-card h3 {
     font-size: 1.5rem;
-    margin-bottom: 5px;
+    padding-left: 8px;
+    padding-right: 8px;
 }
 
 .project-card p {
     color: var(--secondary-color);
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-bottom: 12px;
     font-size: 0.9rem;
-}
-
-/* Styling untuk judul halaman portfolio */
-.section-title {
-    text-align: center;
-    font-size: 2.5rem;
-    font-weight: 900;
-    margin-bottom: 60px;
-    color: var(--primary-color);
 }
