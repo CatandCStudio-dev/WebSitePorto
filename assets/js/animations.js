@@ -1,4 +1,4 @@
-// src/js/animations.js
+// assets/js/animations.js
 
 /**
  * Menangani animasi fade-in untuk elemen saat di-scroll ke dalam viewport.
@@ -57,10 +57,67 @@ const hidePreload = () => {
     }
 };
 
+/**
+ * ==========================================================
+ * FUNGSI BARU: Membuat efek jejak kaki kucing saat diklik
+ * ==========================================================
+ */
+const createCatFootprintOnClick = () => {
+    // Menambahkan event listener ke seluruh halaman
+    window.addEventListener('click', (event) => {
+        // Membuat elemen gambar baru setiap kali ada klik
+        const footprint = document.createElement('img');
+        footprint.src = 'assets/media/catfootprint32.png';
+
+        // Menghitung rotasi acak antara -12 dan +12 derajat
+        const randomRotation = Math.random() * 32 - 16;
+
+        // **PERUBAHAN UTAMA DI SINI**
+        // Hitung posisi klik relatif terhadap seluruh dokumen, bukan hanya layar
+        const clickX = event.clientX + window.scrollX;
+        const clickY = event.clientY + window.scrollY;
+
+        // Menerapkan style pada jejak kaki
+        Object.assign(footprint.style, {
+            position: 'absolute', // **DIUBAH**: dari 'fixed' menjadi 'absolute'
+            left: `${clickX - 16}px`, // Gunakan posisi X yang sudah dihitung
+            top: `${clickY - 16}px`,  // Gunakan posisi Y yang sudah dihitung
+            width: '32px',
+            height: '32px',
+            opacity: '0',
+            transform: `rotate(${randomRotation}deg)`,
+            pointerEvents: 'none',
+            zIndex: '9999',
+            transition: 'opacity 0.25s ease-in-out'
+        });
+
+        // Menambahkan jejak kaki ke dalam body
+        document.body.appendChild(footprint);
+
+        // Fase 1: Fade-in (setelah jeda singkat agar transisi terpicu)
+        setTimeout(() => {
+            footprint.style.opacity = '1';
+        }, 10);
+
+        // Fase 2: Fade-out (setelah fade-in selesai dalam 0.25 detik)
+        setTimeout(() => {
+            footprint.style.transition = 'opacity 2s ease-in-out';
+            footprint.style.opacity = '0';
+        }, 250);
+
+        // Fase 3: Hapus elemen dari DOM setelah semua animasi selesai
+        setTimeout(() => {
+            footprint.remove();
+        }, 2250);
+    });
+};
+
+
 // Menjalankan semua fungsi setelah konten HTML selesai dimuat oleh browser.
 document.addEventListener('DOMContentLoaded', () => {
     console.log("Website Loaded (MPA Mode)");
     hidePreload();
     handleScrollAnimation();
     initializeScrollIndicator();
+    createCatFootprintOnClick();
 });
