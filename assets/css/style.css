@@ -51,3 +51,76 @@ ul {
     height: 400px;  /* Ubah sesuai kebutuhan */
     object-fit: contain;
 }
+
+/* ============================================ */
+/* ======= Styling untuk Navigation Bar ======= */
+/* ============================================ */
+.navbar {
+    width: 100%;
+    padding: 20px 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background: transparent;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo {
+    display: flex; /* Membuat logo dan teks sejajar */
+    align-items: center; /* Menyelaraskan secara vertikal di tengah */
+    gap: 8px; /* Memberi jarak antara logo dan teks */
+    font-size: 1.3rem; /* Ukuran font disesuaikan agar seimbang */
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.nav-logo img {
+    height: 3rem; /* Ukuran logo disesuaikan agar seimbang */
+    width: auto;
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-link {
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--secondary-color);
+}
+
+/* Dropdown styling */
+.dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: rgba(26, 26, 46, 0.8);
+    border-radius: 5px;
+    padding: 10px 0;
+    min-width: 150px;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu li {
+    padding: 10px 20px;
+}
