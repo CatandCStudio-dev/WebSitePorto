@@ -200,7 +200,21 @@
             </p>
             
             <div class="contact-cards">
-                <a href="mailto:coffeecat0005@gmail.com" class="contact-card">
+                <a href="mailto:coffeecat0005@gmail.com" class="contact-card"
+                    onclick="
+                    const to = 'coffeecat0005@gmail.com';
+                    const subject = 'Pemesanan Layanan';
+                    const body = 'Halo admin,%0A%0A';
+                    const gmailWeb = `https://mail.google.com/mail/?view=cm&fs=1&to=${to}&su=${subject}&body=${body}`;
+                    const gmailApp = `intent://compose?to=${to}&subject=${subject}&body=${body}#Intent;scheme=mailto;package=com.google.android.gm;end`;
+                    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+                        if (isMobile && navigator.userAgent.includes('Android')) {
+                            window.location = gmailApp; // Android → Gmail app
+                        } else {
+                           window.open(gmailWeb, '_blank'); // Desktop → Gmail web
+                        }
+                        return false;
+                         ">
                     <div class="icon-wrapper">
                         <i class="bi bi-envelope-fill"></i>
                     </div>
@@ -209,8 +223,10 @@
                         <p>coffeecat0005@gmail.com</p>
                     </div>
                 </a>
+                
 
-                <a href="https://www.instagram.com/catcoffee_studio/" class="contact-card">
+                <a href="https://www.instagram.com/catcoffee_studio/" class="contact-card"
+                    onclick="window.open('https://www.instagram.com/catcoffee_studio/', '_blank'); return false;">
                     <div class="icon-wrapper">
                         <i class="bi bi-instagram"></i>
                     </div>
@@ -220,7 +236,8 @@
                     </div>
                 </a>
 
-                <a href="https://wa.me/6285117660558" class="contact-card">
+                <a href="https://wa.me/6285117660558" class="contact-card"
+                    onclick="window.open('https://wa.me/6285117660558', '_blank'); return false;">
                     <div class="icon-wrapper">
                         <i class="bi bi-whatsapp"></i>
                     </div>
