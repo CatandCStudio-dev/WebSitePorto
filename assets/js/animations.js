@@ -149,14 +149,6 @@ const createCatFootprintOnClick = () => {
 };
 
 
-// Menjalankan semua fungsi setelah konten HTML selesai dimuat oleh browser.
-document.addEventListener('DOMContentLoaded', () => {
-    console.log("Website Loaded (MPA Mode)");
-    hidePreload();
-    handleScrollAnimation();
-    initializeScrollIndicator();
-    createCatFootprintOnClick();
-});
 // Add this to your existing JavaScript file
 
 document.addEventListener('DOMContentLoaded', function() {
