@@ -62,6 +62,42 @@ const hidePreload = () => {
  * FUNGSI BARU: Membuat efek jejak kaki kucing saat diklik
  * ==========================================================
  */
+const initializeProjectSlider = () => {
+    const nextBtn = document.querySelector('.next');
+    const prevBtn = document.querySelector('.prev');
+    const slideContainer = document.querySelector('.slide');
+
+    if (!nextBtn || !prevBtn || !slideContainer) {
+        console.warn("Slider elements not found. Project slider not initialized.");
+        return;
+    }
+
+    nextBtn.onclick = function() {
+        // Ambil daftar item TERBARU setiap kali tombol diklik
+        let items = document.querySelectorAll('.slide .item');
+        // Pindahkan item pertama ke posisi terakhir
+        slideContainer.appendChild(items[0]);
+    }
+
+    prevBtn.onclick = function() {
+        // Ambil daftar item TERBARU setiap kali tombol diklik
+        let items = document.querySelectorAll('.slide .item');
+        // Pindahkan item terakhir ke posisi pertama
+        slideContainer.prepend(items[items.length - 1]);
+    }
+};
+
+
+// Menjalankan semua fungsi setelah konten HTML selesai dimuat oleh browser.
+document.addEventListener('DOMContentLoaded', () => {
+    console.log("Website Loaded (MPA Mode)");
+    hidePreload();
+    handleScrollAnimation();
+    initializeScrollIndicator();
+    createCatFootprintOnClick();
+    initializeProjectSlider(); // Panggil fungsi slider baru
+});
+
 const createCatFootprintOnClick = () => {
     // Menambahkan event listener ke seluruh halaman
     window.addEventListener('click', (event) => {
