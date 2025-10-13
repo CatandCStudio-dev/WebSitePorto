@@ -12,14 +12,6 @@ main .project-section {
     padding-bottom: 100px; /* Jarak di bagian bawah halaman */
 }
 
-.section-title {
-    text-align: center;
-    font-size: 2.5rem;
-    font-weight: 900;
-    margin-bottom: 60px;
-    color: var(--primary-color);
-}
-
 .project-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));

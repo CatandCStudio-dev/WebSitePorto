@@ -58,46 +58,8 @@ const hidePreload = () => {
 };
 
 /**
- * ==========================================================
- * FUNGSI BARU: Membuat efek jejak kaki kucing saat diklik
- * ==========================================================
+ * Membuat efek jejak kaki kucing saat diklik
  */
-const initializeProjectSlider = () => {
-    const nextBtn = document.querySelector('.next');
-    const prevBtn = document.querySelector('.prev');
-    const slideContainer = document.querySelector('.slide');
-
-    if (!nextBtn || !prevBtn || !slideContainer) {
-        console.warn("Slider elements not found. Project slider not initialized.");
-        return;
-    }
-
-    nextBtn.onclick = function() {
-        // Ambil daftar item TERBARU setiap kali tombol diklik
-        let items = document.querySelectorAll('.slide .item');
-        // Pindahkan item pertama ke posisi terakhir
-        slideContainer.appendChild(items[0]);
-    }
-
-    prevBtn.onclick = function() {
-        // Ambil daftar item TERBARU setiap kali tombol diklik
-        let items = document.querySelectorAll('.slide .item');
-        // Pindahkan item terakhir ke posisi pertama
-        slideContainer.prepend(items[items.length - 1]);
-    }
-};
-
-
-// Menjalankan semua fungsi setelah konten HTML selesai dimuat oleh browser.
-document.addEventListener('DOMContentLoaded', () => {
-    console.log("Website Loaded (MPA Mode)");
-    hidePreload();
-    handleScrollAnimation();
-    initializeScrollIndicator();
-    createCatFootprintOnClick();
-    initializeProjectSlider(); // Panggil fungsi slider baru
-});
-
 const createCatFootprintOnClick = () => {
     // Menambahkan event listener ke seluruh halaman
     window.addEventListener('click', (event) => {
@@ -148,10 +110,40 @@ const createCatFootprintOnClick = () => {
     });
 };
 
+/**
+ * Inisialisasi slider proyek dengan tombol navigasi
+ */
+const initializeProjectSlider = () => {
+    const nextBtn = document.querySelector('.next');
+    const prevBtn = document.querySelector('.prev');
+    const slideContainer = document.querySelector('.slide');
 
-// Add this to your existing JavaScript file
+    if (!nextBtn || !prevBtn || !slideContainer) {
+        console.warn("Slider elements not found. Project slider not initialized.");
+        return;
+    }
 
-document.addEventListener('DOMContentLoaded', function() {
+    nextBtn.onclick = function() {
+        // Ambil daftar item TERBARU setiap kali tombol diklik
+        let items = document.querySelectorAll('.slide .item');
+        // Pindahkan item pertama ke posisi terakhir
+        slideContainer.appendChild(items[0]);
+    }
+
+    prevBtn.onclick = function() {
+        // Ambil daftar item TERBARU setiap kali tombol diklik
+        let items = document.querySelectorAll('.slide .item');
+        // Pindahkan item terakhir ke posisi pertama
+        slideContainer.prepend(items[items.length - 1]);
+    }
+};
+
+/**
+ * Slider untuk profil di halaman About Us
+ */
+
+const initializeAboutSlider = () => {
+    // Fungsi ini sekarang diinisialisasi langsung di dalam DOMContentLoaded di atas
     const profilesContainer = document.querySelector('.about-profiles');
     const profiles = document.querySelectorAll('.about-profile');
     const prevBtn = document.querySelector('.prev-btn');
@@ -187,4 +179,15 @@ document.addEventListener('DOMContentLoaded', function() {
         currentIndex = currentIndex < profiles.length - 1 ? currentIndex + 1 : 0;
         updateSlider();
     });
+};
+
+// Menjalankan semua fungsi setelah konten HTML selesai dimuat oleh browser.
+document.addEventListener('DOMContentLoaded', () => {
+    console.log("Website Loaded (MPA Mode)");
+    hidePreload();
+    handleScrollAnimation();
+    initializeScrollIndicator();
+    createCatFootprintOnClick();
+    initializeProjectSlider(); // Panggil fungsi slider baru
+    initializeAboutSlider(); // Panggil fungsi slider About Us
 });
