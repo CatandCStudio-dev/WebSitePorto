@@ -121,3 +121,42 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeScrollIndicator();
     createCatFootprintOnClick();
 });
+// Add this to your existing JavaScript file
+
+document.addEventListener('DOMContentLoaded', function() {
+    const profilesContainer = document.querySelector('.about-profiles');
+    const profiles = document.querySelectorAll('.about-profile');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    let currentIndex = 0;
+
+    // Hide all profiles except the first one
+    profiles.forEach((profile, index) => {
+        if (index !== 0) {
+            profile.style.opacity = '0';
+        }
+    });
+
+    function updateSlider() {
+        profilesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+        
+        // Update opacity for smooth transition
+        profiles.forEach((profile, index) => {
+            if (index === currentIndex) {
+                profile.style.opacity = '1';
+            } else {
+                profile.style.opacity = '0';
+            }
+        });
+    }
+
+    prevBtn.addEventListener('click', () => {
+        currentIndex = currentIndex > 0 ? currentIndex - 1 : profiles.length - 1;
+        updateSlider();
+    });
+
+    nextBtn.addEventListener('click', () => {
+        currentIndex = currentIndex < profiles.length - 1 ? currentIndex + 1 : 0;
+        updateSlider();
+    });
+});
