@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cat and Coffee Studio</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+    <style>
+      /* Enhanced custom styles */
+      .active {
+        z-index: 10;
+      }
+
+      .project-item {
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        will-change: transform, opacity;
+        position: relative;
+        width: 800px;
+        flex-shrink: 0;
+      }
+
+      .project-items {
+        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        gap: 2rem;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        padding: 0 2rem;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(0px) scale(1);
+        }
+        50% {
+          transform: translateY(-10px) scale(1.02);
+        }
+        100% {
+          transform: translateY(0px) scale(1);
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .animate-fadeIn {
+        animation: fadeIn 0.6s ease-out forwards;
+      }
+
+      .category-btn {
+        transition: all 0.3s ease;
+      }
+
+      .category-btn:hover {
+        transform: translateY(-2px);
+      }
+
+      .category-btn.active {
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      }
+
+      /* Custom scrollbar for project descriptions */
+      .project-description::-webkit-scrollbar {
+        width: 4px;
+      }
+
+      .project-description::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 2px;
+      }
+
+      .project-description::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 2px;
+      }
+
+      .project-description::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.5);
+      }
+    </style>
+
+<body class="bg-[#141E30]">
+    <script src="assets/js/animations.js"></script>
+
+    <!-- Preload Screen -->
+    <div id="preload" class="fixed inset-0 bg-[#141E30] flex items-center justify-center z-50">
+        <img src="assets/media/logo2_vectorized.png" alt="Loading..." class="w-32 h-32 object-contain animate-pulse"/>
+    </div>
+
+    <!-- Navigation Bar -->
+    <header class="fixed w-full top-0 z-40 bg-[#141E30]/95 backdrop-blur-sm">
+        <nav class="px-4">
+            <div class="container mx-auto flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center gap-3">
+                    <img src="assets/media/logo2_vectorized.png" alt="C&C Studio" class="h-12 w-12 object-contain">
+                    <span class="text-white font-bold leading-tight">
+                        C&C<br>STUDIO
+                    </span>
+                </a>
+
+                <!-- Navigation Menu -->
+                <ul class="hidden md:flex items-center gap-8">
+                    <li>
+                        <a href="index.html" class="text-white hover:text-white transition-colors">HOME</a>
+                    </li>
+                    <li>
+                        <a href="#" class="text-white hover:text-white transition-colors">ABOUT</a>
+                    </li>
+                    <li class="relative group">
+                        <a href="#" class="text-white hover:text-white transition-colors flex items-center gap-1">
+                            SERVICE
+                            <i class="bi bi-chevron-down text-xs"></i>
+                        </a>
+                        <!-- Dropdown Menu -->
+                        <ul class="absolute left-0 mt-2 w-48 py-2 bg-[#141E30] border border-white/10 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                            <li>
+                                <a href="#" class="block px-4 py-2 text-white hover:text-white hover:bg-white/5 transition-colors">Service 1</a>
+                            </li>
+                            <li>
+                                <a href="#" class="block px-4 py-2 text-white hover:text-white hover:bg-white/5 transition-colors">Service 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="projects.html" class="text-white hover:text-[white] transition-colors">PROJECT</a>
+                    </li>
+                    <li>
+                        <a href="#" class="text-white hover:text-[white] transition-colors">CONTACT</a>
+                    </li>
+                </ul>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-white hover:text-[white] transition-colors">
+                    <i class="bi bi-list text-2xl"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+<!-- Video Hero Section -->
+<main class="relative h-screen flex items-center justify-start overflow-hidden">
+    <video class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-full min-h-full w-auto h-auto -z-10 brightness-50" playsinline autoplay muted loop>
+        <source src="assets/media/VIdeo Porto Web Compress.mp4" type="video/mp4">
+        Browser Anda tidak mendukung tag video.
+    </video>
+
+    <!-- Gradient Overlay -->
+    <div class="absolute inset-0 bg-gradient-to-t from-[#141E30] via-transparent to-transparent opacity-95"></div>
+
+    <div class="container mx-auto px-4 z-10 pl-48 md:pl-12 sm:pl-4">
+        <h1 class="text-5xl md:text-4xl sm:text-3xl font-bold text-white leading-tight mb-8 drop-shadow-lg">
+            PURRING IDEAS,<br>BREWING INNOVATION.
+        </h1>
+        <button class="px-8 py-4 bg-transparent border-2 border-white text-white font-bold rounded-xl hover:bg-white hover:text-[#141E30] transition-all duration-300">
+            OUR WORKS
+        </button>
+    </div>
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2">
+        <span class="block w-6 h-10 border-2 border-white rounded-full relative">
+            <span class="absolute top-2 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-white rounded-full animate-bounce"></span>
+        </span>
+    </div>
+</main>
+
+<!-- Services Section -->
+    <section id="services" class="bg-[#141E30] py-24">
+    <div class="container mx-auto px-4">
+        <h2 class="text-4xl font-black text-white text-center mb-16">OUR SERVICES</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Service Card 1 -->
+            <div class="p-8 border-2 border-white/20 rounded-2xl bg-transparent hover:bg-[#3b3b57] hover:-translate-y-2 transition-all duration-300 relative overflow-hidden group">
+                <h3 class="text-2xl text-white mb-4">3D Modelling & Design</h3>
+                <p class="text-white/80">Kami menyediakan layanan pembuatan model 3D untuk game, animasi, arsitektur, dan produk.</p>
+                <div class="absolute -bottom-8 -right-8 w-10 h-10 bg-[url('../media/paw64.png')] bg-cover opacity-0 group-hover:opacity-100 group-hover:bottom-0 group-hover:right-4 transition-all duration-300"></div>
+            </div>
+
+            <!-- Service Card 2 -->
+            <div class="p-8 border-2 border-white/20 rounded-2xl bg-transparent hover:bg-[#3b3b57] hover:-translate-y-2 transition-all duration-300 relative overflow-hidden group">
+                <h3 class="text-2xl text-[white] mb-4">Graphic Design</h3>
+                <p class="text-white/80">Kami membuat desain visual dan identitas brand yang kuat — mulai dari logo, poster, hingga UI.</p>
+                <div class="absolute -bottom-8 -right-8 w-10 h-10 bg-[url('../media/paw64.png')] bg-cover opacity-0 group-hover:opacity-100 group-hover:bottom-0 group-hover:right-4 transition-all duration-300"></div>
+            </div>
+
+            <!-- Service Card 3 -->
+            <div class="p-8 border-2 border-white/20 rounded-2xl bg-transparent hover:bg-[#3b3b57] hover:-translate-y-2 transition-all duration-300 relative overflow-hidden group">
+                <h3 class="text-2xl text-[white] mb-4">IoT Development</h3>
+                <p class="text-white/80">Kami mengembangkan dan memberikan servis berbasis Internet of Things (IoT).</p>
+                <div class="absolute -bottom-8 -right-8 w-10 h-10 bg-[url('../media/paw64.png')] bg-cover opacity-0 group-hover:opacity-100 group-hover:bottom-0 group-hover:right-4 transition-all duration-300"></div>
+            </div>
+
+            <!-- Service Card 4 -->
+            <div class="p-8 border-2 border-white/20 rounded-2xl bg-transparent hover:bg-[#3b3b57] hover:-translate-y-2 transition-all duration-300 relative overflow-hidden group">
+                <h3 class="text-2xl text-[white] mb-4">AI & Machine Learning</h3>
+                <p class="text-white/80">Kami mengembangkan model Artificial Intelligence dan Machine Learning serta implementasinya.</p>
+                <div class="absolute -bottom-8 -right-8 w-10 h-10 bg-[url('../media/paw64.png')] bg-cover opacity-0 group-hover:opacity-100 group-hover:bottom-0 group-hover:right-4 transition-all duration-300"></div>
+            </div>
+
+            <!-- Service Card 5 -->
+            <div class="p-8 border-2 border-white/20 rounded-2xl bg-transparent hover:bg-[#3b3b57] hover:-translate-y-2 transition-all duration-300 relative overflow-hidden group">
+                <h3 class="text-2xl text-[white] mb-4">Database Management</h3>
+                <p class="text-white/80">Kami membantu membangun dan mengelola database yang aman, efisien, dan mudah diintegrasikan.</p>
+                <div class="absolute -bottom-8 -right-8 w-10 h-10 bg-[url('../media/paw64.png')] bg-cover opacity-0 group-hover:opacity-100 group-hover:bottom-0 group-hover:right-4 transition-all duration-300"></div>
+            </div>
+
+            <!-- Service Card 6 -->
+            <div class="p-8 border-2 border-white/20 rounded-2xl bg-transparent hover:bg-[#3b3b57] hover:-translate-y-2 transition-all duration-300 relative overflow-hidden group">
+                <h3 class="text-2xl text-[white] mb-4">Setup Management</h3>
+                <p class="text-white/80">Kami membantu membangun server Discord profesional Serta menyediakan jasa pembuatan dan kustomisasi Linktree.</p>
+                <div class="absolute -bottom-8 -right-8 w-10 h-10 bg-[url('../media/paw64.png')] bg-cover opacity-0 group-hover:opacity-100 group-hover:bottom-0 group-hover:right-4 transition-all duration-300"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Projects Section -->
+<section id="projects" class="relative min-h-screen bg-[#141E30] py-24 overflow-hidden">
+  <div class="container mx-auto px-4 mb-16">
+    <h2 class="text-4xl font-black text-white text-center relative z-10">OUR PROJECTS</h2>
+    
+    <!-- Project Categories -->
+    <div class="flex justify-center gap-4 mt-8 mb-12">
+      <button class="category-btn active px-6 py-2 rounded-full bg-white/10 text-white hover:bg-white hover:text-[#141E30] transition-all duration-300" data-category="all">
+        All Projects
+      </button>
+      <button class="category-btn px-6 py-2 rounded-full bg-white/10 text-white hover:bg-white hover:text-[#141E30] transition-all duration-300" data-category="3d">
+        3D Models
+      </button>
+      <button class="category-btn px-6 py-2 rounded-full bg-white/10 text-white hover:bg-white hover:text-[#141E30] transition-all duration-300" data-category="game">
+        Game Dev
+      </button>
+      <button class="category-btn px-6 py-2 rounded-full bg-white/10 text-white hover:bg-white hover:text-[#141E30] transition-all duration-300" data-category="web">
+        Web Apps
+      </button>
+    </div>
+  </div>
+
+  <div class="project-showcase absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] max-w-[1200px] h-[600px] bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-2xl border border-white/10">
+    <div class="relative w-full h-full slide-container">
+      <!-- Project Items -->
+      <div class="project-items flex gap-8 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full transition-all duration-700">
+        <!-- Active Project -->
+        <div class="project-item active relative w-full h-[500px] rounded-2xl overflow-hidden group transition-all duration-500" data-category="3d">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10"></div>
+          <img src="assets/media/that's way i gave up on music 3.png" alt="Project 1" class="w-full h-full object-cover transform scale-100 group-hover:scale-110 transition-transform duration-700">
+          <div class="absolute bottom-0 left-0 w-full p-8 z-20 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+            <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm text-white mb-3">3D Modeling</span>
+            <h3 class="text-3xl font-bold text-white mb-2">Character Design</h3>
+            <p class="text-white/80 mb-4">Detailed 3D character model with high-quality textures and animations.</p>
+            <div class="flex gap-4">
+              <button class="px-6 py-2 bg-white text-[#141E30] rounded-lg font-medium hover:bg-white/90 transform hover:-translate-y-1 transition-all duration-300">
+                View Project
+              </button>
+              <button class="px-6 py-2 bg-transparent border-2 border-white text-white rounded-lg font-medium hover:bg-white/10 transform hover:-translate-y-1 transition-all duration-300">
+                Behind the Scenes
+              </button>
+            </div>
+          </div>
+          <!-- Tech Stack Badges -->
+          <div class="absolute top-6 right-6 flex gap-2 z-20">
+            <span class="px-3 py-1 bg-white/20 rounded-full text-sm text-white backdrop-blur-sm">Blender</span>
+            <span class="px-3 py-1 bg-white/20 rounded-full text-sm text-white backdrop-blur-sm">Unity</span>
+          </div>
+        </div>
+
+        <!-- Other Projects (Thumbnails) -->
+        <div class="project-item w-[300px] h-[400px] rounded-2xl overflow-hidden opacity-50 hover:opacity-75 transition-all duration-300 cursor-pointer relative group" data-category="game">
+          <img src="assets/media/that's way i gave up on music 3.png" alt="Project 2" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div class="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="inline-block px-2 py-1 bg-white/20 rounded-full text-xs text-white mb-2">Game Development</span>
+            <h4 class="text-white text-lg font-semibold">RPG Game Project</h4>
+          </div>
+        </div>
+
+        <div class="project-item w-[300px] h-[400px] rounded-2xl overflow-hidden opacity-50 hover:opacity-75 transition-all duration-300 cursor-pointer relative group" data-category="web">
+          <img src="assets/media/that's way i gave up on music 3.png" alt="Project 3" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div class="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="inline-block px-2 py-1 bg-white/20 rounded-full text-xs text-white mb-2">Web Development</span>
+            <h4 class="text-white text-lg font-semibold">E-Commerce Platform</h4>
+          </div>
+        </div>
+
+        <div class="project-item w-[300px] h-[400px] rounded-2xl overflow-hidden opacity-50 hover:opacity-75 transition-all duration-300 cursor-pointer relative group" data-category="3d">
+          <img src="assets/media/that's way i gave up on music 3.png" alt="Project 4" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div class="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="inline-block px-2 py-1 bg-white/20 rounded-full text-xs text-white mb-2">3D Animation</span>
+            <h4 class="text-white text-lg font-semibold">Animated Short Film</h4>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-4 z-30">
+        <button class="prev-project w-12 h-12 rounded-full bg-white/10 hover:bg-white transition-all duration-300 flex items-center justify-center group">
+          <i class="bi bi-chevron-left text-2xl text-white group-hover:text-[#141E30]"></i>
+        </button>
+        <button class="next-project w-12 h-12 rounded-full bg-white/10 hover:bg-white transition-all duration-300 flex items-center justify-center group">
+          <i class="bi bi-chevron-right text-2xl text-white group-hover:text-[#141E30]"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Add new styles -->
+<style>
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.project-item.active {
+  animation: fadeInScale 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+</style>
+
+<!-- Enhanced project showcase script -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const container = document.querySelector('.project-items');
+  const items = document.querySelectorAll('.project-item');
+  const nextBtn = document.querySelector('.next-project');
+  const prevBtn = document.querySelector('.prev-project');
+  const categoryBtns = document.querySelectorAll('.category-btn');
+  
+  // Set fixed width for project items
+  items.forEach(item => {
+    item.style.width = '800px';
+    item.style.flexShrink = '0';
+  });
+
+  let currentIndex = 0;
+  let currentCategory = 'all';
+  let filteredItems = [...items];
+
+  // Filter projects by category
+  function filterProjects(category) {
+    currentCategory = category;
+    categoryBtns.forEach(btn => {
+      if (btn.dataset.category === category) {
+        btn.classList.add('active', 'bg-white', 'text-[#141E30]');
+        btn.classList.remove('bg-white/10', 'text-white');
+      } else {
+        btn.classList.remove('active', 'bg-white', 'text-[#141E30]');
+        btn.classList.add('bg-white/10', 'text-white');
+      }
+    });
+
+    items.forEach(item => {
+      if (category === 'all' || item.dataset.category === category) {
+        item.style.display = 'block';
+        item.classList.add('animate-fadeIn');
+      } else {
+        item.style.display = 'none';
+        item.classList.remove('animate-fadeIn');
+      }
+    });
+
+    // Update filtered items
+    filteredItems = [...items].filter(item => 
+      category === 'all' || item.dataset.category === category
+    );
+    
+    // Reset to first item of filtered list
+    currentIndex = 0;
+    updateSlider();
+  }
+
+  function updateSlider() {
+    const offset = currentIndex * -100;
+    container.style.transform = `translate(-50%, -50%) translateX(${offset}px)`;
+    
+    filteredItems.forEach((item, index) => {
+      if (index === currentIndex) {
+        item.classList.add('active');
+        // Add floating animation to active item
+        item.style.animation = 'float 6s ease-in-out infinite';
+      } else {
+        item.classList.remove('active');
+        item.style.animation = '';
+      }
+
+      // Update opacity and scale based on distance from active item
+      const distance = Math.abs(index - currentIndex);
+      item.style.opacity = distance === 0 ? 1 : Math.max(0.5 - (distance * 0.2), 0.2);
+      item.style.transform = `scale(${distance === 0 ? 1 : 0.9})`;
+    });
+  }
+
+  // Navigation event listeners
+  nextBtn?.addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % filteredItems.length;
+    updateSlider();
+  });
+
+  prevBtn?.addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + filteredItems.length) % filteredItems.length;
+    updateSlider();
+  });
+
+  // Category filter event listeners
+  categoryBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterProjects(btn.dataset.category);
+    });
+  });
+
+  // Mouse wheel navigation
+  container.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    if (e.deltaY > 0) {
+      nextBtn.click();
+    } else {
+      prevBtn.click();
+    }
+  }, { passive: false });
+
+  // Touch swipe navigation
+  let touchStartX = 0;
+  container.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+  });
+
+  container.addEventListener('touchend', (e) => {
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX - touchEndX;
+
+    if (Math.abs(diff) > 50) { // Minimum swipe distance
+      if (diff > 0) {
+        nextBtn.click();
+      } else {
+        prevBtn.click();
+      }
+    }
+  });
+
+  // Initialize
+  updateSlider();
+});
+</script>
+
+<!-- Project animation styles -->
+<style>
+  @keyframes projectFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+      filter: blur(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+  }
+
+  .project-item.active {
+    animation: projectFadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const nextBtn = document.querySelector('.next');
+    const prevBtn = document.querySelector('.prev');
+    const slideContainer = document.querySelector('.slide');
+
+    if (!nextBtn || !prevBtn || !slideContainer) return;
+
+    nextBtn.onclick = function () {
+      let items = document.querySelectorAll('.slide > div');
+      slideContainer.appendChild(items[0]);
+    }
+
+    prevBtn.onclick = function () {
+      let items = document.querySelectorAll('.slide > div');
+      slideContainer.prepend(items[items.length - 1]);
+    }
+  });
+</script>
+
+<!-- About Section -->
+    <section id="about" class=" py-24">
+    <div class=" mx-auto px-4">
+        <!-- Section Title -->
+        <h2 class="text-4xl font-black text-white text-center mb-16">ABOUT US</h2>        <!-- About Content -->
+        <div class="max-w-3xl mx-auto text-center">
+            <div class="text-white text-lg leading-relaxed">
+                <p class="mb-4">Cat and Coffee Studio adalah sebuah studio kreatif yang berfokus pada pengembangan teknologi dan desain inovatif. Kami percaya bahwa ide-ide terbaik lahir dari kombinasi kreativitas dan teknologi mutakhir.</p>
+                <p>Bergabunglah dengan kami dalam perjalanan menciptakan masa depan yang lebih cerah dan penuh warna!</p>
+            </div>
+        </div>
+
+        <!-- Profile Slider -->
+        <div class="relative mx-auto mt-16 max-w-6xl  bg-red-500">
+            <!-- Prev Button -->
+            <button class="prev absolute -left-20 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-[white] transition-all flex items-center justify-center z-10 group">
+                <i class="bi bi-chevron-left text-2xl text-[white] group-hover:text-[#141E30]"></i>
+            </button>
+
+            <!-- Profiles Container -->
+            <div class="overflow-hidden">
+                <div class="slide flex transition-transform duration-500">
+                    <!-- Profile 1 -->
+                    <div class="min-w-full flex flex-col pt-32 p-10 border-2 border-white/20 rounded-2xl bg-gradient-to-b from-[#141E30]/80 to-[#141E30] relative">
+                        <div class="flex-1 pr-40">
+                            <h1 class="text-7xl font-black text-white uppercase mb-2 leading-none">LYCHNUS</h1>
+                            <div class="text-2xl text-white/80 uppercase font-semibold mb-8">game artis</div>
+                            <div class="mt-8 pt-8 border-t border-white/10 w-72">
+                                <div class="text-lg text-white font-medium text-center">
+                                    sebuah entitas hitam yang jago membuat aset game
+                                </div>
+                            </div>
+                        </div>
+                        <div class="absolute right-10 -top-0 w-flex h-[500px] z-40">
+                            <img src="./assets/media/lychnus.png" alt="Lychnus Profile" class="w-full h-full object-contain drop-shadow-2xl">
+                        </div>
+                    </div>
+
+                    <!-- Profile 2 -->
+                    <div class="min-w-full flex flex-col pt-32 p-10 border-2 border-white/20 rounded-2xl bg-gradient-to-b from-[#141E30]/80 to-[#141E30] relative">
+                        <div class="flex-1 pr-40">
+                            <h1 class="text-7xl font-black text-white uppercase mb-2 leading-none">LUCA</h1>
+                            <div class="text-2xl text-white/80 uppercase font-semibold mb-8">Game Developer</div>
+                            <div class="mt-8 pt-8 border-t border-white/10 w-72">
+                                <div class="text-lg text-white font-medium text-center">
+                                    Spesialis dalam menciptakan pengalaman pengguna yang intuitif
+                                </div>
+                            </div>
+                        </div>
+                       <div class="absolute right-10 -top-0 w-flex h-[600px] z-40">
+                            <img src="./assets/media/luca.png" alt="Luca Profile" class="w-full h-full object-contain drop-shadow-2xl">
+                        </div>
+                    </div>
+
+                    <!-- Profile 3 -->
+                    <div class="min-w-fullflex flex-col pt-32 p-10 border-2 border-white/20 rounded-2xl bg-gradient-to-b from-[#141E30]/80 to-[#141E30] relative">
+                            <div class="flex-1 pr-40">
+                                <h1 class="text-7xl font-black text-white uppercase mb-2 leading-none">xevorine</h1>
+                                <div class="text-2xl text-white/80 uppercase font-semibold mb-8">AI/ML Specialist</div>
+                                <div class="mt-8 pt-8 border-t border-white/10 w-72">
+                                    <div class="text-lg text-white font-medium text-center">
+                                        Ahli dalam mengembangkan solusi AI dan Machine Learning
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="absolute right-10 -top-0 w-flex h-[500px] z-40">
+                                <img src="./assets/media/xevorine.png" alt="Xevorine Profile" class="w-full h-full object-contain drop-shadow-2xl">
+                            </div>
+                        </div>
+                </div>
+            </div>
+
+            <!-- Next Button -->
+            <button class="next absolute -right-20 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-[white] transition-all flex items-center justify-center z-10 group">
+                <i class="bi bi-chevron-right text-2xl text-[white] group-hover:text-[#141E30]"></i>
+            </button>
+        </div>
+    </div>
+</section>
+<!-- Contact Section -->
+<section id="contact" class="bg-[#141E30] py-24">
+    <div class="container mx-auto px-4">
+        <h2 class="text-4xl font-black text-[#FFFFFF] text-center mb-16">Let's Brew Your Project</h2>
+        <div class="max-w-4xl mx-auto text-center">
+            <p class="text-2xl text-white font-medium mb-4">"Every great project starts with a small spark, let's brew yours."</p>
+            <p class="text-lg text-white/80 leading-relaxed mb-12">
+                Hubungi kami dan biarkan kreativitasmu tumbuh bersama C&C Studio. Kami terbuka untuk kolaborasi, obrolan santai, atau bahkan brainstorming sambil ngopi. 
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <!-- Email Card -->
+                <a href="mailto:coffeecat0005@gmail.com" 
+                    class="flex items-center p-6 bg-white/5 border border-white/10 rounded-xl hover:border-[white] hover:-translate-y-1 transition-all group"
+                    onclick="
+                    const to = 'coffeecat0005@gmail.com';
+                    const subject = 'Pemesanan Layanan';
+                    const body = 'Halo admin,%0A%0A';
+                    const gmailWeb = `https://mail.google.com/mail/?view=cm&fs=1&to=${to}&su=${subject}&body=${body}`;
+                    const gmailApp = `intent://compose?to=${to}&subject=${subject}&body=${body}#Intent;scheme=mailto;package=com.google.android.gm;end`;
+                    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+                    if (isMobile && navigator.userAgent.includes('Android')) {
+                        window.location = gmailApp;
+                    } else {
+                        window.open(gmailWeb, '_blank');
+                    }
+                    return false;">
+                    <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center mr-4">
+                        <i class="bi bi-envelope-fill text-[#141E30] text-2xl"></i>
+                    </div>
+                    <div class="text-left">
+                        <h4 class="text-white text-xl mb-1">Email</h4>
+                        <p class="text-white/80 text-sm">coffeecat0005@gmail.com</p>
+                    </div>
+                </a>
+
+                <!-- Instagram Card -->
+                <a href="https://www.instagram.com/catcoffee_studio/" 
+                    class="flex items-center p-6 bg-white/5 border border-white/10 rounded-xl hover:border-[white] hover:-translate-y-1 transition-all group"
+                    onclick="window.open('https://www.instagram.com/catcoffee_studio/', '_blank'); return false;">
+                    <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center mr-4">
+                        <i class="bi bi-instagram text-[#141E30] text-2xl"></i>
+                    </div>
+                    <div class="text-left">
+                        <h4 class="text-white text-xl mb-1">Instagram</h4>
+                        <p class="text-white/80 text-sm">catcoffee_studio</p>
+                    </div>
+                </a>
+
+                <!-- WhatsApp Card -->
+                <a href="https://wa.me/6285117660558" 
+                    class="flex items-center p-6 bg-white/5 border border-white/10 rounded-xl hover:border-[white] hover:-translate-y-1 transition-all group"
+                    onclick="window.open('https://wa.me/6285117660558', '_blank'); return false;">
+                    <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center mr-4">
+                        <i class="bi bi-whatsapp text-[#141E30] text-2xl"></i>
+                    </div>
+                    <div class="text-left">
+                        <h4 class="text-white text-xl mb-1">WhatsApp</h4>
+                        <p class="text-white/80 text-sm">+62 851-1766-0558</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Fun Fact -->
+            <div class="flex items-center justify-center gap-4 bg-white/5 rounded-xl p-8 mt-12">
+                <i class="bi bi-cup-hot-fill text-[white] text-3xl"></i>
+                <p class="text-white/80 text-lg">Kami menjawab pesan sambil ngopi, jadi dijamin responsnya hangat dan friendly!</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Footer -->
+    <footer class="bg-[#141E30] text-white py-6">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-sm">&copy; 2024 Cat and Coffee Studio. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/navbar.js"></script>
+    <script src="assets/js/preload.js"></script>
+    <script src="assets/js/slider.js"></script>

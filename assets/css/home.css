@@ -1,3 +1,13 @@
+/* Common Variables */
+:root {
+    --section-padding: 100px 0;
+    --section-bg: rgb(20, 30, 48);
+    --card-border: 2px solid rgba(255, 255, 255, 0.2);
+    --card-hover-bg: #3b3b57;
+    --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Common Classes */
 .section-title {
     text-align: center;
     font-size: 2.5rem;
@@ -6,36 +16,60 @@
     color: var(--primary-color);
 }
 
-/* ========================================== */
-/* ======= Styling untuk Hero Section ======= */
-/* ========================================== */
+/* Common Card Styles */
+.card-base {
+    background-color: transparent;
+    border: var(--card-border);
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-base:hover {
+    background-color: var(--card-hover-bg);
+    transform: translateY(-10px);
+    box-shadow: var(--card-shadow);
+}
+
+/* Paw Effect Mixin */
+.paw-effect::after {
+    content: '';
+    position: absolute;
+    bottom: -32px;
+    right: -32px;
+    width: 42px;
+    height: 42px;
+    background-image: url('../media/paw64.png');
+    background-size: cover;
+    transition: all 0.3s ease-out;
+    opacity: 0;
+}
+
+.paw-effect:hover::after {
+    bottom: 0;
+    right: 15px;
+    opacity: 1;
+}
+
+/* ======= Hero Section ======= */
 
 .hero-section {
     height: 100vh;
-    position: relative; /* Diperlukan agar video bisa diposisikan */
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    overflow: hidden; /* Sembunyikan bagian video yang keluar dari section */
+    overflow: hidden;
 }
 
-/* Tambahkan blok CSS baru ini */
 .hero-section::after {
-    content: ''; /* Wajib ada untuk pseudo-element */
+    content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        to top, 
-        rgb(20, 30, 48) 5%, /* Warna solid di bawah, cocok dengan section berikutnya */
-        transparent 50% /* Transparan di bagian tengah ke atas */
-    );
-    z-index: 0; /* Posisikan di antara video (-1) dan konten (1) */
+    inset: 0;
+    background: linear-gradient(to top, var(--section-bg) 5%, transparent 50%);
+    z-index: 0;
 }
 
-/* Tambahkan blok CSS baru untuk video */
 .hero-video {
     position: absolute;
     top: 50%;
@@ -45,13 +79,13 @@
     min-height: 100%;
     width: auto;
     height: auto;
-    z-index: -1; /* Pindahkan video ke lapisan paling belakang */
-    filter: brightness(50%); /* Efek visual agar teks lebih terbaca */
+    z-index: -1;
+    filter: brightness(50%);
 }
 
 .hero-content {
     padding-left: 12rem;
-    z-index: 1; /* Pastikan konten berada di atas video */
+    z-index: 1;
 }
 
 .hero-content h1 {
@@ -79,57 +113,51 @@
     color: var(--background-color);
 }
 
-/* =========================================== */
-/* ====== Styling untuk Services Section ===== */
-/* =========================================== */
-
+/* ====== Services Section ===== */
 .services-section {
-    padding: 100px 0;
-    background-color: rgb(20, 30, 48); /* Warna latar sama dengan project section */
+    padding: var(--section-padding);
+    background-color: var(--section-bg);
 }
 
 .services-grid {
     display: grid;
-    /* Membuat 2 kolom di layar besar, dan 1 kolom di layar kecil */
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 30px;
 }
 
 .service-card {
     background-color: transparent;
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    border: var(--card-border);
     border-radius: 16px;
+    position: relative;
+    overflow: hidden;
     padding: 30px;
     transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
-    
-    /* Tambahan untuk efek paw.png */
-    position: relative; /* Penting agar elemen pseudo bisa diposisikan relatif terhadap card */
-    overflow: hidden; /* Penting agar paw tidak terlihat sebelum muncul */
 }
 
 .service-card:hover {
-    background-color: #3b3b57; /* Tambahkan background-color saat hover */
+    background-color: var(--card-hover-bg);
     transform: translateY(-10px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    box-shadow: var(--card-shadow);
 }
 
 .service-card::after {
     content: '';
     position: absolute;
-    bottom: -32px; /* Awalnya di luar, 32px adalah tinggi paw */
-    right: -32px;  /* Awalnya di luar, 32px adalah lebar paw */
+    bottom: -32px;
+    right: -32px;
     width: 42px;
     height: 42px;
-    background-image: url('../media/paw64.png'); /* Sesuaikan path jika berbeda */
+    background-image: url('../media/paw64.png');
     background-size: cover;
-    transition: all 0.3s ease-out; /* Transisi untuk muncul */
-    opacity: 0; /* Awalnya tidak terlihat */
+    transition: all 0.3s ease-out;
+    opacity: 0;
 }
 
 .service-card:hover::after {
-    bottom: 0px; /* Posisi akhir dari bawah */
-    right: 15px; /* Posisi akhir dari kanan */
-    opacity: 1; /* Menjadi terlihat */
+    bottom: 0;
+    right: 15px;
+    opacity: 1;
 }
 
 .service-card h3 {
@@ -150,12 +178,11 @@
 /* =========================================== */
 
 .project-section {
-    position: relative; /* Add this */
-    padding: 100px 0;
-    height: 100vh; /* Add this */
-    background-color: rgb(20, 30, 48);
-    /* Warna latar yang sedikit berbeda agar ada kontras */
-    overflow: hidden; /* Add this */
+    position: relative;
+    padding: var(--section-padding);
+    height: 100vh;
+    background-color: var(--section-bg);
+    overflow: hidden;
 }
 
 .project-container {
@@ -194,7 +221,9 @@
     transition: 0.5s;
 }
 
-.slide .item:nth-child(1),
+.slide .item:nth-child(1), .slide .item:nth-child(6) {
+    left: calc(50% - 220px);
+}
 .slide .item:nth-child(2) {
     left: 0;
     top: 0;
@@ -302,8 +331,8 @@
 /* About section styling */
 /* Update about section styling */
 .about-section {
-    padding: 100px 0;
-    background-color: rgb(20, 30, 48);
+    padding: var(--section-padding);
+    background-color: var(--section-bg);
 }
 
 .about-content {
@@ -585,8 +614,8 @@
 /* =========================================== */
 /* Update the contact section styling */
 .contact-section {
-    padding: 100px 0;
-    background-color: rgb(20, 30, 48);
+    padding: var(--section-padding);
+    background-color: var(--section-bg);
     color: var(--secondary-color);
 }
 
@@ -618,40 +647,41 @@
 }
 
 .contact-card {
+    background-color: transparent;
+    border: var(--card-border);
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
     display: flex;
     align-items: center;
     padding: 1.5rem;
     background: rgba(255, 255, 255, 0.05);
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
     transition: all 0.3s ease;
-    position: relative; /* Penting agar elemen pseudo bisa diposisikan relatif terhadap card */
-    overflow: hidden; /* Penting agar paw tidak terlihat sebelum muncul */
 }
 
 .contact-card:hover {
-    background-color: #3b3b57; /* Tambahkan background-color saat hover */
+    background-color: var(--card-hover-bg);
     transform: translateY(-10px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    box-shadow: var(--card-shadow);
 }
 
 .contact-card::after {
     content: '';
     position: absolute;
-    bottom: -32px; /* Awalnya di luar, 32px adalah tinggi paw */
-    right: -32px;  /* Awalnya di luar, 32px adalah lebar paw */
+    bottom: -32px;
+    right: -32px;
     width: 42px;
     height: 42px;
-    background-image: url('../media/paw64.png'); /* Sesuaikan path jika berbeda */
+    background-image: url('../media/paw64.png');
     background-size: cover;
-    transition: all 0.3s ease-out; /* Transisi untuk muncul */
-    opacity: 0; /* Awalnya tidak terlihat */
+    transition: all 0.3s ease-out;
+    opacity: 0;
 }
 
 .contact-card:hover::after {
-    bottom: 0px; /* Posisi akhir dari bawah */
-    right: 15px; /* Posisi akhir dari kanan */
-    opacity: 1; /* Menjadi terlihat */
+    bottom: 0;
+    right: 15px;
+    opacity: 1;
 }
 
 /* rotate 180deg paw */
@@ -745,7 +775,7 @@
 .footer {
     padding: 20px 0;
     text-align: center;
-    background-color: rgb(20, 30, 48); /* Warna latar sama dengan project section */
+    background-color: var(--section-bg);
     color: var(--secondary-color);
     font-size: 0.9rem;
 }
