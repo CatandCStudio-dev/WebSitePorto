@@ -113,11 +113,24 @@
     color: var(--background-color);
 }
 
-/* ====== Services Section ===== */
-.services-section {
-    padding: var(--section-padding);
+/* ====================================================================== */
+/* ====== PERUBAHAN UTAMA: Membuat Section Menjadi Full Screen ====== */
+/* ====================================================================== */
+.services-section,
+.about-section,
+.contact-section {
+    height: 100vh; /* Membuat tinggi section sama dengan tinggi layar */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Menengahkan konten secara vertikal */
+    align-items: center; /* Menengahkan konten secara horizontal */
+    padding: 0; /* Menghapus padding lama agar tidak mengganggu centering */
     background-color: var(--section-bg);
 }
+
+
+/* ====== Services Section ===== */
+/* .services-section sudah di-handle oleh rule di atas */
 
 .services-grid {
     display: grid;
@@ -207,48 +220,67 @@
     background-position: 50% 50%;
     background-size: cover;
     position: absolute;
-    top: 50%; /* Default vertical alignment */
-    transform: translateY(-50%); /* Default vertical transform */
+    top: 50%;
+    transform: translateY(-50%);
     border-radius: 20px;
     box-shadow: 0 30px 50px #505050;
-    transition: 0.5s;
-    z-index: 2; /* Make cards appear on top */
+    transition: 0.5s ease-in-out; /* Menggunakan transisi yang lebih halus */
+    z-index: 1; /* Z-index default */
 }
 
-/* Previous item, off-screen left */
 .slide .item:nth-child(1) {
-    left: -100%;
-    opacity: 0;
-}
-
-/* Active item, full-screen and behind other cards */
-.slide .item:nth-child(2) {
     top: 0;
     left: 0;
-    transform: translate(0, 0); /* Reset transform */
+    transform: translate(0, 0);
     border-radius: 0;
     width: 100%;
     height: 100%;
     box-shadow: none;
-    z-index: 1; /* Behind everything else */
+    opacity: 0;
 }
+
+.slide .item:nth-child(2) {
+    top: 0;
+    left: 0;
+    transform: translate(0, 0);
+    border-radius: 0;
+    width: 100%;
+    height: 100%;
+    box-shadow: none;
+    opacity: 1; /* Pastikan terlihat */
+    z-index: 2; /* Letakkan di atas item pertama */
+}
+
 .slide .item:nth-child(2)::after {
     content: '';
     position: absolute;
     inset: 0;
     background: rgba(0, 0, 0, 0.4);
-    z-index: 1;
+    z-index: 3;
 }
 
-/* Positioning for the ONLY preview card */
+.project-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom, 
+        var(--section-bg) 0%, 
+        transparent 30%, 
+        transparent 70%, 
+        var(--section-bg) 100%
+    );
+    z-index: 4; /* Atur lapisan di atas gambar tapi di bawah teks */
+}
+
 .slide .item:nth-child(3) {
-    left: calc(100% - 300px); /* Adjust horizontal position */
-    top: 100%; /* Align top of card with bottom of screen */
-    /* Pull up by half height and add rotation */
-    transform: translateY(-150px) rotate(-15deg); 
+    left: calc(100% - 300px);
+    top: 100%;
+    transform: translateY(-150px) rotate(-15deg);
+    z-index: 4; /* Pastikan kartu pratinjau di atas latar belakang */
+    opacity: 1; /* Pastikan terlihat */
 }
 
-/* Hide all other potential preview cards */
 .slide .item:nth-child(n + 4) {
     left: calc(100% + 220px);
     opacity: 0;
@@ -264,7 +296,7 @@
     color: #eee;
     transform: translate(0, -50%);
     display: none;
-    z-index: 3; /* Content on top of preview cards */
+    z-index: 5; /* Konten harus berada di paling atas */
     text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
 }
 
@@ -301,7 +333,6 @@
         transform: translate(0, 100px);
         filter: blur(33px);
     }
-
     to {
         opacity: 1;
         transform: translate(0, 0);
@@ -338,13 +369,7 @@
 /* =========================================== */
 /* ======= Styling untuk About Section ====== */
 /* =========================================== */
-/* About section styling */
-/* Update about section styling */
-.about-section {
-    padding: var(--section-padding);
-    background-color: var(--section-bg);
-}
-
+/* .about-section sudah di-handle oleh rule di atas */
 .about-content {
     max-width: 800px;
     margin: 0 auto;
@@ -373,14 +398,13 @@
     }
 }
 
-/* Update about profile styling */
 .about-profile {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin: 100px auto; /* Tambah margin atas untuk ruang gambar */
+    margin: 100px auto;
     padding: 40px;
-    padding-top: 150px; /* Tambah padding atas untuk ruang gambar */
+    padding-top: 150px;
     max-width: 1200px;
     position: relative;
     border: 2px solid rgba(255, 255, 255, 0.2);
@@ -399,17 +423,17 @@
 .profile-image {
     position: absolute;
     right: 30px;
-    top: 0px; /* Geser ke atas agar keluar dari border */
+    top: 0px;
     width: 600px;
     height: 700px;
-    z-index: 2; /* Pastikan gambar di atas elemen lain */
+    z-index: 2;
 }
 
 .profile-image img {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3)); /* Tambah shadow untuk efek melayang */
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
 }
 
 .profile-content {
@@ -438,13 +462,13 @@
     margin-top: 2rem;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding-top: 2rem;
-    width: 300px; /* Set fixed width for details section */
+    width: 300px;
 }
 
 .profile-row {
     display: flex;
     margin-bottom: 1.5rem;
-    flex-direction: row; /* Change back to row */
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
 }
@@ -454,21 +478,21 @@
     font-size: 1.1rem;
     text-transform: uppercase;
     font-weight: 500;
-    margin-bottom: 0.5rem; /* Tambahkan jarak antar label dan value */
+    margin-bottom: 0.5rem;
 }
 
 .profile-value {
     color: var(--primary-color);
     font-size: 1.1rem;
     font-weight: 500;
-    text-align: center; /* Pusatkan teks value */
-    margin-top: 0.5rem; /* Tambahkan jarak di atas teks value */
+    text-align: center;
+    margin-top: 0.5rem;
 }
 .about-profile-slider {
     position: relative;
     max-width: 1200px;
     margin: 60px auto;
-    overflow: visible; /* Ubah dari hidden ke visible */
+    overflow: visible;
 }
 .about-profiles {
     display: flex;
@@ -477,14 +501,10 @@
 
 .about-profile {
     min-width: 100%;
-    flex-shrink: 0; /* Tambahkan ini */
+    flex-shrink: 0;
     opacity: 1;
     transition: opacity 0.3s ease-in-out;
-}
-
-/* Hapus margin dari about-profile */
-.about-profile {
-    margin: 0;
+    margin: 0; /* Menghapus margin dari about-profile */
 }
 
 .slider-btn {
@@ -518,14 +538,13 @@
 }
 
 .prev-btn {
-    left: -80px; /* Ubah dari 20px ke -80px */
+    left: -80px;
 }
 
 .next-btn {
-    right: -80px; /* Ubah dari 20px ke -80px */
+    right: -80px;
 }
 
-/* Update media queries untuk responsiveness */
 @media (max-width: 1400px) {
     .slider-btn {
         width: 40px;
@@ -551,8 +570,6 @@
     }
 }
 
-/* Media Queries untuk Responsiveness */
-/* Update responsive design */
 @media (max-width: 768px) {
     .about-profile {
         margin: 60px auto;
@@ -577,7 +594,7 @@
         font-size: 3rem;
     }
     .profile-details {
-        width: 100%; /* Biarkan details section mengambil lebar penuh pada layar kecil */
+        width: 100%;
     }
 
     .hero-content {
@@ -596,61 +613,52 @@
         max-width: 90%;
     }
 
-    /* Reposition the preview card on mobile */
     .slide .item:nth-child(3) {
-        width: 120px; /* Make it smaller */
-        height: 180px; /* Adjust height */
-        left: calc(100% - 130px); /* Adjust position from right */
+        width: 120px;
+        height: 180px;
+        left: calc(100% - 130px);
         top: 100%;
-        transform: translateY(-90px) rotate(-15deg); /* Adjust pull-up based on new height */
+        transform: translateY(-90px) rotate(-15deg);
     }
 
-    /* MODIFIED: This is the key change for the animation fix. */
-    /* Instead of hiding with display:none, we now position it off-screen. */
     .slide .item:nth-child(n+4) {
-        left: calc(100% + 150px); /* Start position is off-screen to the right */
-        opacity: 0; /* It's invisible */
+        left: calc(100% + 150px);
+        opacity: 0;
     }
     
     .services-grid, .project-grid {
-        grid-template-columns: 1fr; /* Ubah menjadi satu kolom pada layar kecil */
+        grid-template-columns: 1fr;
     }
 
     .team-member {
-        padding-left: 5%; /* Kurangi padding kiri pada layar kecil */
+        padding-left: 5%;
         text-align: left;
     }
     .member-name {
-        font-size: 2rem; /* Kurangi ukuran font pada layar kecil */
+        font-size: 2rem;
     }
     .member-bio {
-        max-width: 100%; /* Biarkan bio mengambil lebar penuh pada layar kecil */
+        max-width: 100%;
     }
     .contact-content {
-        padding: 0 10px; /* Tambahkan padding horizontal pada layar kecil */
+        padding: 0 10px;
     }
     .contact-content h2 {
-        font-size: 2rem; /* Kurangi ukuran font pada layar kecil */
+        font-size: 2rem;
     }
     .contact-content p {
-        font-size: 0.9rem; /* Kurangi ukuran font pada layar kecil */
+        font-size: 0.9rem;
     }
     .cta-button {
-        padding: 10px 20px; /* Kurangi padding tombol pada layar kecil */
-        font-size: 0.9rem; /* Kurangi ukuran font tombol pada layar kecil */
+        padding: 10px 20px;
+        font-size: 0.9rem;
     }
 }
 
 /* =========================================== */
 /* ======= Styling untuk Contact Section ====== */
 /* =========================================== */
-/* Update the contact section styling */
-.contact-section {
-    padding: var(--section-padding);
-    background-color: var(--section-bg);
-    color: var(--secondary-color);
-}
-
+/* .contact-section sudah di-handle oleh rule di atas */
 .contact-content {
     max-width: 1000px;
     margin: 0 auto;

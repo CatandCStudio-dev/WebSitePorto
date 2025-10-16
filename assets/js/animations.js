@@ -1,5 +1,82 @@
 // assets/js/animations.js
 
+const initializeSmoothSnapScroll = () => {
+    // Cek jika pengguna preferensi "reduced motion"
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.body.style.overflowY = 'auto'; // Kembalikan scroll normal
+        return;
+    }
+
+    const sections = document.querySelectorAll('main, section');
+    if (sections.length === 0) return;
+
+    let currentSectionIndex = 0;
+    let isScrolling = false;
+    const scrollDuration = 800; // Durasi animasi dalam milidetik (lebih lama = lebih halus)
+
+    /**
+     * Easing function (easeInOutCubic): animasi dimulai dan berakhir dengan lambat.
+     * Ini adalah kunci untuk efek yang terasa "smooth".
+     */
+    const easeInOutCubic = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+    const scrollToSection = (index) => {
+        if (isScrolling) return;
+        isScrolling = true;
+
+        const targetSection = sections[index];
+        const startPosition = window.pageYOffset;
+        const targetPosition = targetSection.offsetTop;
+        const distance = targetPosition - startPosition;
+        let startTime = null;
+
+        const animationLoop = (currentTime) => {
+            if (startTime === null) startTime = currentTime;
+            const timeElapsed = currentTime - startTime;
+            const progress = Math.min(timeElapsed / scrollDuration, 1);
+            const easedProgress = easeInOutCubic(progress);
+
+            window.scrollTo(0, startPosition + distance * easedProgress);
+
+            if (timeElapsed < scrollDuration) {
+                requestAnimationFrame(animationLoop);
+            } else {
+                currentSectionIndex = index; // Update indeks setelah animasi selesai
+                setTimeout(() => {
+                    isScrolling = false;
+                }, 100); // Penundaan singkat untuk mencegah trigger beruntun
+            }
+        };
+
+        requestAnimationFrame(animationLoop);
+    };
+
+    // Event listener untuk scroll mouse
+    const handleWheel = (event) => {
+        if (isScrolling) {
+            event.preventDefault();
+            return;
+        }
+
+        const scrollDirection = event.deltaY;
+        let nextSectionIndex = currentSectionIndex;
+
+        if (scrollDirection > 0 && currentSectionIndex < sections.length - 1) {
+            // Scroll ke bawah
+            nextSectionIndex++;
+        } else if (scrollDirection < 0 && currentSectionIndex > 0) {
+            // Scroll ke atas
+            nextSectionIndex--;
+        }
+
+        if (nextSectionIndex !== currentSectionIndex) {
+            event.preventDefault();
+            scrollToSection(nextSectionIndex);
+        }
+    };
+
+    window.addEventListener('wheel', handleWheel, { passive: false });
+};
 /**
  * Menangani animasi fade-in untuk elemen saat di-scroll ke dalam viewport.
  * Digunakan untuk project cards.
@@ -190,4 +267,5 @@ document.addEventListener('DOMContentLoaded', () => {
     createCatFootprintOnClick();
     initializeProjectSlider(); // Panggil fungsi slider baru
     initializeAboutSlider(); // Panggil fungsi slider About Us
+    initializeSmoothSnapScroll(); // Panggil fungsi scroll baru
 });
