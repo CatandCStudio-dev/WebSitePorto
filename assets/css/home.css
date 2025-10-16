@@ -581,6 +581,7 @@
         margin: 60px auto;
         padding: 30px;
         padding-top: 100px;
+        align-items: center; /* REFINEMENT: Ensure content block is centered */
     }
 
     .profile-image {

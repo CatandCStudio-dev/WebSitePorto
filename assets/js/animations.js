@@ -261,11 +261,48 @@ const initializeAboutSlider = () => {
 // Menjalankan semua fungsi setelah konten HTML selesai dimuat oleh browser.
 document.addEventListener('DOMContentLoaded', () => {
     console.log("Website Loaded (MPA Mode)");
+
+    // --- NEW NAVBAR/HAMBURGER LOGIC ---
+    const hamburger = document.querySelector(".hamburger");
+    const navMenu = document.querySelector(".nav-menu");
+    const navLinks = document.querySelectorAll(".nav-menu .nav-link");
+    const dropdownToggles = document.querySelectorAll(".nav-item.dropdown > .nav-link");
+
+    const closeMenu = () => {
+        hamburger.classList.remove("active");
+        navMenu.classList.remove("active");
+    };
+
+    hamburger.addEventListener("click", () => {
+        hamburger.classList.toggle("active");
+        navMenu.classList.toggle("active");
+    });
+
+    // Close menu when a non-dropdown link is clicked
+    navLinks.forEach(link => {
+        if (!link.parentElement.classList.contains('dropdown')) {
+            link.addEventListener("click", closeMenu);
+        }
+    });
+
+    // Handle dropdown clicks on mobile
+    dropdownToggles.forEach(toggle => {
+        toggle.addEventListener("click", (e) => {
+            // Check if hamburger is visible (mobile view)
+            if (window.getComputedStyle(hamburger).display === 'block') {
+                e.preventDefault(); // Prevent page jump
+                const parent = toggle.parentElement;
+                parent.classList.toggle("active");
+            }
+        });
+    });
+    // --- END OF NEW LOGIC ---
+
     hidePreload();
     handleScrollAnimation();
     initializeScrollIndicator();
     createCatFootprintOnClick();
-    initializeProjectSlider(); // Panggil fungsi slider baru
-    initializeAboutSlider(); // Panggil fungsi slider About Us
+    initializeProjectSlider();
+    initializeAboutSlider();
     // initializeSmoothSnapScroll()
 });
