@@ -226,31 +226,30 @@
 </section>
 
 <!-- Projects Section -->
-<section id="projects" class="relative min-h-screen bg-[#141E30] py-24 overflow-hidden">
+<section id="projects" class="relative min-h-screen bg-[#141E30] py-12 overflow-hidden">
   <div class="container mx-auto px-4 mb-16">
-    <h2 class="text-4xl font-black text-white text-center relative z-10">OUR PROJECTS</h2>
+    <h2 class="text-2xl font-black text-white text-center relative z-10">OUR PROJECTS</h2>
     
     <!-- Project Categories -->
-    <div class="flex justify-center gap-4 mt-8 mb-12">
-      <button class="category-btn active px-6 py-2 rounded-full bg-white/10 text-white hover:bg-white hover:text-[#141E30] transition-all duration-300" data-category="all">
-        All Projects
-      </button>
-      <button class="category-btn px-6 py-2 rounded-full bg-white/10 text-white hover:bg-white hover:text-[#141E30] transition-all duration-300" data-category="3d">
-        3D Models
-      </button>
-      <button class="category-btn px-6 py-2 rounded-full bg-white/10 text-white hover:bg-white hover:text-[#141E30] transition-all duration-300" data-category="game">
-        Game Dev
-      </button>
-      <button class="category-btn px-6 py-2 rounded-full bg-white/10 text-white hover:bg-white hover:text-[#141E30] transition-all duration-300" data-category="web">
-        Web Apps
-      </button>
-    </div>
-  </div>
-
-  <div class="project-showcase absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] max-w-[1200px] h-[600px] bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-2xl border border-white/10">
+  <div class="flex justify-center gap-4 mt-8 mb-12">
+            <button class="category-btn active px-6 py-2 rounded-full bg-white text-[#141E30] font-semibold transition-all duration-300 shadow-lg" data-category="all">
+                All Projects
+            </button>
+            <button class="category-btn px-6 py-2 rounded-full bg-white/10 text-white hover:bg-white hover:text-[#141E30] transition-all duration-300 font-semibold" data-category="3d">
+                3D Models
+            </button>
+            <button class="category-btn px-6 py-2 rounded-full bg-white/10 text-white hover:bg-white hover:text-[#141E30] transition-all duration-300 font-semibold" data-category="game">
+                Game Dev
+            </button>
+            <button class="category-btn px-6 py-2 rounded-full bg-white/10 text-white hover:bg-white hover:text-[#141E30] transition-all duration-300 font-semibold" data-category="web">
+                Web Apps
+            </button>
+        </div>
+    <!-- Project Showcase -->
+  <div class="project-showcase absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400vw] max-w-[1500px] h-[800px] bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-5xl border border-white/10">
     <div class="relative w-full h-full slide-container">
       <!-- Project Items -->
-      <div class="project-items flex gap-8 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full transition-all duration-700">
+      <div class="project-items flex gap-16 absolute top-2 left-2 -translate-x-2 -translate-y-2 w-full transition-all duration-700">
         <!-- Active Project -->
         <div class="project-item active relative w-full h-[500px] rounded-2xl overflow-hidden group transition-all duration-500" data-category="3d">
           <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10"></div>
@@ -265,7 +264,7 @@
               </button>
               <button class="px-6 py-2 bg-transparent border-2 border-white text-white rounded-lg font-medium hover:bg-white/10 transform hover:-translate-y-1 transition-all duration-300">
                 Behind the Scenes
-              </button>
+              </button>e
             </div>
           </div>
           <!-- Tech Stack Badges -->
