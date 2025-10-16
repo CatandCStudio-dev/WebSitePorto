@@ -541,7 +541,6 @@
     }
 }
 
-/* MODIFIED: Removed the rule that hides the preview card */
 @media (max-width: 1200px) {
     .prev-btn {
         left: 20px;
@@ -597,7 +596,7 @@
         max-width: 90%;
     }
 
-    /* ADDED: Reposition the preview card on mobile */
+    /* Reposition the preview card on mobile */
     .slide .item:nth-child(3) {
         width: 120px; /* Make it smaller */
         height: 180px; /* Adjust height */
@@ -606,9 +605,11 @@
         transform: translateY(-90px) rotate(-15deg); /* Adjust pull-up based on new height */
     }
 
-    /* ADDED: Make sure any other cards are definitely hidden on mobile */
+    /* MODIFIED: This is the key change for the animation fix. */
+    /* Instead of hiding with display:none, we now position it off-screen. */
     .slide .item:nth-child(n+4) {
-        display: none;
+        left: calc(100% + 150px); /* Start position is off-screen to the right */
+        opacity: 0; /* It's invisible */
     }
     
     .services-grid, .project-grid {
