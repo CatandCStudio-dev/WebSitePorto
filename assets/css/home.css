@@ -116,16 +116,22 @@
 /* ====================================================================== */
 /* ====== PERUBAHAN UTAMA: Membuat Section Menjadi Full Screen ====== */
 /* ====================================================================== */
+/* .services-section,
+.about-section,
+.contact-section {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    background-color: var(--section-bg);
+} */
+
 .services-section,
 .about-section,
 .contact-section {
-    height: 100vh; /* Membuat tinggi section sama dengan tinggi layar */
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Menengahkan konten secara vertikal */
-    align-items: center; /* Menengahkan konten secara horizontal */
-    padding: 0; /* Menghapus padding lama agar tidak mengganggu centering */
-    background-color: var(--section-bg);
+    padding: var(--section-padding); /* Memberi jarak atas dan bawah */
 }
 
 

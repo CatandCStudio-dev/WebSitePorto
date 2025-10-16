@@ -14,17 +14,13 @@
     box-sizing: border-box;
 }
 
-html {
-    /* Properti scroll-snap dihapus, akan ditangani oleh JavaScript */
-}
-
 body {
     font-family: 'Montserrat', sans-serif;
     background-color: var(--background-color);
     color: var(--primary-color);
     overflow-x: hidden;
-    /* Mencegah scrollbar muncul selama animasi JS */
-    overflow-y: hidden;
+    /* ✅ MENGEMBALIKAN SCROLLBAR BAWAAN BROWSER */
+    overflow-y: auto; 
 }
 
 /* Penanda snap-align tetap ada untuk referensi, meski tidak lagi digunakan oleh CSS Snap */

@@ -267,5 +267,5 @@ document.addEventListener('DOMContentLoaded', () => {
     createCatFootprintOnClick();
     initializeProjectSlider(); // Panggil fungsi slider baru
     initializeAboutSlider(); // Panggil fungsi slider About Us
-    initializeSmoothSnapScroll(); // Panggil fungsi scroll baru
+    // initializeSmoothSnapScroll()
 });
