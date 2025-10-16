@@ -179,21 +179,16 @@
 
 .project-section {
     position: relative;
-    padding: var(--section-padding);
+    padding: 0;
     height: 100vh;
     background-color: var(--section-bg);
     overflow: hidden;
 }
 
 .project-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 1000px;
-    height: 600px;
-    background-color: #f5f5f5;
-    box-shadow: 0 30px 50px #dbdbdb;
+    position: relative;
+    width: 100%;
+    height: 100%;
 }
 
 .project-section .section-title {
@@ -202,10 +197,9 @@
     font-weight: 900;
     margin-bottom: 60px;
     color: var(--primary-color);
-    position: relative; /* Add this for z-index */
-    z-index: 2; /* Make sure title is above slider */
+    position: relative;
+    z-index: 2;
 }
-
 
 .slide .item {
     width: 200px;
@@ -213,52 +207,65 @@
     background-position: 50% 50%;
     background-size: cover;
     position: absolute;
-    top: 50%;
-    transform: translate(0, -50%);
+    top: 50%; /* Default vertical alignment */
+    transform: translateY(-50%); /* Default vertical transform */
     border-radius: 20px;
     box-shadow: 0 30px 50px #505050;
-    left: 50%;
     transition: 0.5s;
+    z-index: 2; /* Make cards appear on top */
 }
 
-.slide .item:nth-child(1), .slide .item:nth-child(6) {
-    left: calc(50% - 220px);
+/* Previous item, off-screen left */
+.slide .item:nth-child(1) {
+    left: -100%;
+    opacity: 0;
 }
+
+/* Active item, full-screen and behind other cards */
 .slide .item:nth-child(2) {
-    left: 0;
     top: 0;
-    transform: translate(0, 0);
+    left: 0;
+    transform: translate(0, 0); /* Reset transform */
     border-radius: 0;
     width: 100%;
     height: 100%;
+    box-shadow: none;
+    z-index: 1; /* Behind everything else */
+}
+.slide .item:nth-child(2)::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1;
 }
 
+/* Positioning for the ONLY preview card */
 .slide .item:nth-child(3) {
-    left: 50%;
+    left: calc(100% - 300px); /* Adjust horizontal position */
+    top: 100%; /* Align top of card with bottom of screen */
+    /* Pull up by half height and add rotation */
+    transform: translateY(-150px) rotate(-15deg); 
 }
 
-.slide .item:nth-child(4) {
-    left: calc(50% + 220px);
-}
-
-.slide .item:nth-child(5) {
-    left: calc(50% + 440px);
-}
-
-.slide .item:nth-child(n + 6) {
-    left: calc(50% + 660px);
+/* Hide all other potential preview cards */
+.slide .item:nth-child(n + 4) {
+    left: calc(100% + 220px);
     opacity: 0;
 }
 
 .item .content {
     position: absolute;
     top: 50%;
-    left: 100px;
-    width: 300px;
+    left: 12rem;
+    width: auto;
+    max-width: 500px;
     text-align: left;
     color: #eee;
     transform: translate(0, -50%);
     display: none;
+    z-index: 3; /* Content on top of preview cards */
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 .slide .item:nth-child(2) .content {
@@ -307,6 +314,8 @@
     text-align: center;
     position: absolute;
     bottom: 20px;
+    z-index: 10;
+    padding-bottom: 60px;
 }
 
 .button button {
@@ -324,6 +333,7 @@
     background-color: #ababab;
     color: #fff;
 }
+
 
 /* =========================================== */
 /* ======= Styling untuk About Section ====== */
@@ -531,6 +541,7 @@
     }
 }
 
+/* MODIFIED: Removed the rule that hides the preview card */
 @media (max-width: 1200px) {
     .prev-btn {
         left: 20px;
@@ -578,6 +589,26 @@
     
     .hero-content h1 {
         font-size: 2rem;
+    }
+
+    .item .content {
+        left: 5%;
+        right: 5%;
+        max-width: 90%;
+    }
+
+    /* ADDED: Reposition the preview card on mobile */
+    .slide .item:nth-child(3) {
+        width: 120px; /* Make it smaller */
+        height: 180px; /* Adjust height */
+        left: calc(100% - 130px); /* Adjust position from right */
+        top: 100%;
+        transform: translateY(-90px) rotate(-15deg); /* Adjust pull-up based on new height */
+    }
+
+    /* ADDED: Make sure any other cards are definitely hidden on mobile */
+    .slide .item:nth-child(n+4) {
+        display: none;
     }
     
     .services-grid, .project-grid {
@@ -683,27 +714,6 @@
     right: 15px;
     opacity: 1;
 }
-
-/* rotate 180deg paw */
-/* .contact-card::after {
-    content: '';
-    position: absolute;
-    top: -32px;
-    right: -32px;
-    width: 42px;
-    height: 42px;
-    background-image: url('../media/paw64.png');
-    background-size: cover;
-    transition: all 0.3s ease-out;
-    opacity: 0;
-    transform: rotate(180deg);
-}
-
-.contact-card:hover::after {
-    top: 0px; 
-    right: 15px;
-    opacity: 1;
-} */
 
 .icon-wrapper {
     width: 50px;
