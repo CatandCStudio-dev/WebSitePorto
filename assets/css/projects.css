@@ -6,6 +6,15 @@
 * serta memastikan layout project card konsisten dengan halaman utama.
 */
 
+/* Gaya untuk judul section agar konsisten dengan halaman utama */
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-bottom: 60px;
+    color: var(--primary-color);
+}
+
 /* Memberi jarak atas pada section utama agar tidak tertutup navbar */
 main .project-section {
     padding-top: 150px; /* Jarak dari atas halaman */
