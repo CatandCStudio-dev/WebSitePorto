@@ -1,662 +1,521 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cat and Coffee Studio</title>
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Style | Icon -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-</head>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-    <style>
-      /* Enhanced custom styles */
-      .active {
-        z-index: 10;
-      }
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer" />
 
-      .project-item {
-        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        will-change: transform, opacity;
-        position: relative;
-        width: 800px;
-        flex-shrink: 0;
-      }
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
 
-      .project-items {
-        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        display: flex;
-        gap: 2rem;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        padding: 0 2rem;
-      }
+    <!-- Favicon General -->
+    <link rel="icon" href="https://github.com/CatandCStudio-dev/WebSitePorto/blob/main/assets/media/logo2_vectorized.png?raw=true" type="image/x-icon" />
+    <link rel="icon" type="image/png" sizes="16x16" href="https://github.com/CatandCStudio-dev/WebSitePorto/blob/main/assets/media/favicon/favicon-16x16.png?raw=true" />
+    <link rel="icon" type="image/png" sizes="32x32" href="https://github.com/CatandCStudio-dev/WebSitePorto/blob/main/assets/media/logo2_vectorized.png?raw=true" />
+    <link rel="apple-touch-icon" sizes="180x180" href="https://github.com/CatandCStudio-dev/WebSitePorto/blob/main/assets/media/logo2_vectorized.png?raw=true" />
+    <link rel="icon" type="image/png" sizes="192x192" href="https://github.com/CatandCStudio-dev/WebSitePorto/blob/main/assets/media/logo2_vectorized.png?raw=true" />
+    <link rel="icon" type="image/png" sizes="512x512" href="https://github.com/CatandCStudio-dev/WebSitePorto/blob/main/assets/media/logo2_vectorized.png?raw=true" />
 
-      @keyframes float {
-        0% {
-          transform: translateY(0px) scale(1);
-        }
-        50% {
-          transform: translateY(-10px) scale(1.02);
-        }
-        100% {
-          transform: translateY(0px) scale(1);
-        }
-      }
+    <title>Cat and Coffee Studio</title>
+  </head>
+  <body class="font-[Montserrat] text-gray-900">
+    <header class="bg-[#D18949] py-3">
+      <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+        <div class="flex h-16 items-center justify-between">
+          <div class="flex-1 md:flex md:items-center md:gap-12">
+            <a class="block text-teal-600" href="#">
+              <span class="sr-only">Home</span>
+              <img src="https://github.com/CatandCStudio-dev/WebSitePorto/blob/main/assets/media/cnc_blank_putih.png?raw=true" class="h-20" alt="" />
+            </a>
+          </div>
 
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
+          <div class="md:flex md:items-center md:gap-12">
+            <nav aria-label="Global" class="hidden md:block">
+              <ul class="flex items-center gap-6 text-sm font-semibold">
+                <li>
+                  <a class="text-white transition hover:underline" href="#home">Home</a>
+                </li>
 
-      .animate-fadeIn {
-        animation: fadeIn 0.6s ease-out forwards;
-      }
+                <li>
+                  <a class="text-white transition hover:underline" href="#services">Services</a>
+                </li>
 
-      .category-btn {
-        transition: all 0.3s ease;
-      }
+                <li>
+                  <a class="text-white transition hover:underline" href="#portfolio">Projects</a>
+                </li>
 
-      .category-btn:hover {
-        transform: translateY(-2px);
-      }
+                <li>
+                  <a class="text-white transition hover:underline" href="#contact">Contact</a>
+                </li>
 
-      .category-btn.active {
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-      }
-
-      /* Custom scrollbar for project descriptions */
-      .project-description::-webkit-scrollbar {
-        width: 4px;
-      }
-
-      .project-description::-webkit-scrollbar-track {
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 2px;
-      }
-
-      .project-description::-webkit-scrollbar-thumb {
-        background: rgba(255, 255, 255, 0.3);
-        border-radius: 2px;
-      }
-
-      .project-description::-webkit-scrollbar-thumb:hover {
-        background: rgba(255, 255, 255, 0.5);
-      }
-    </style>
-
-<body class="bg-[#141E30]">
-    <script src="assets/js/animations.js"></script>
-
-    <!-- Preload Screen -->
-    <div id="preload" class="fixed inset-0 bg-[#141E30] flex items-center justify-center z-50">
-        <img src="assets/media/logo2_vectorized.png" alt="Loading..." class="w-32 h-32 object-contain animate-pulse"/>
-    </div>
-
-    <!-- Navigation Bar -->
-    <header class="fixed w-full top-0 z-40 bg-[#141E30]/95 backdrop-blur-sm">
-        <nav class="px-4">
-            <div class="container mx-auto flex items-center justify-between h-20">
-                <!-- Logo -->
-                <a href="index.html" class="flex items-center gap-3">
-                    <img src="assets/media/logo2_vectorized.png" alt="C&C Studio" class="h-12 w-12 object-contain">
-                    <span class="text-white font-bold leading-tight">
-                        C&C<br>STUDIO
-                    </span>
-                </a>
-
-                <!-- Navigation Menu -->
-                <ul class="hidden md:flex items-center gap-8">
-                    <li>
-                        <a href="index.html" class="text-white hover:text-white transition-colors">HOME</a>
-                    </li>
-                    <li>
-                        <a href="#" class="text-white hover:text-white transition-colors">ABOUT</a>
-                    </li>
-                    <li class="relative group">
-                        <a href="#" class="text-white hover:text-white transition-colors flex items-center gap-1">
-                            SERVICE
-                            <i class="bi bi-chevron-down text-xs"></i>
-                        </a>
-                        <!-- Dropdown Menu -->
-                        <ul class="absolute left-0 mt-2 w-48 py-2 bg-[#141E30] border border-white/10 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
-                            <li>
-                                <a href="#" class="block px-4 py-2 text-white hover:text-white hover:bg-white/5 transition-colors">Service 1</a>
-                            </li>
-                            <li>
-                                <a href="#" class="block px-4 py-2 text-white hover:text-white hover:bg-white/5 transition-colors">Service 2</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="projects.html" class="text-white hover:text-[white] transition-colors">PROJECT</a>
-                    </li>
-                    <li>
-                        <a href="#" class="text-white hover:text-[white] transition-colors">CONTACT</a>
-                    </li>
-                </ul>
-
-                <!-- Mobile Menu Button -->
-                <button class="md:hidden text-white hover:text-[white] transition-colors">
-                    <i class="bi bi-list text-2xl"></i>
-                </button>
-            </div>
-        </nav>
+                <li>
+                  <a class="text-white transition hover:underline" href="#about">About</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
     </header>
-<!-- Video Hero Section -->
-<main class="relative h-screen flex items-center justify-start overflow-hidden">
-    <video class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-full min-h-full w-auto h-auto -z-10 brightness-50" playsinline autoplay muted loop>
-        <source src="assets/media/VIdeo Porto Web Compress.mp4" type="video/mp4">
-        Browser Anda tidak mendukung tag video.
-    </video>
 
-    <!-- Gradient Overlay -->
-    <div class="absolute inset-0 bg-gradient-to-t from-[#141E30] via-transparent to-transparent opacity-95"></div>
+    <section class="bg-white lg:grid lg:h-screen lg:place-content-center" id="home">
+      <div class="mx-auto w-screen max-w-screen-xl px-4 py-16 sm:px-6 sm:py-24 md:grid md:grid-cols-2 md:items-center md:gap-4 lg:px-8 lg:py-32">
+        <div class="max-w-prose text-left">
+          <h1 class="text-4xl font-bold text-gray-800 sm:text-5xl">
+            PURRING
+            <strong class="text-[#D18949]">IDEAS</strong>
+            & BREWING
+            <strong class="text-[#D18949]">INNOVATION</strong>
+          </h1>
 
-    <div class="container mx-auto px-4 z-10 pl-48 md:pl-12 sm:pl-4">
-        <h1 class="text-5xl md:text-4xl sm:text-3xl font-bold text-white leading-tight mb-8 drop-shadow-lg">
-            PURRING IDEAS,<br>BREWING INNOVATION.
+          <p class="mt-4 text-base text-pretty text-gray-700 sm:text-lg/relaxed">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque, nisi. Natus, provident accusamus impedit minima harum corporis iusto.</p>
+
+          <div class="mt-4 flex gap-4 sm:mt-6">
+            <a class="inline-block rounded border border-[#D18949] bg-[#D18949] px-5 py-3 font-medium text-white shadow-sm transition-colors hover:bg-[#D18949]/80" href="#services">Get Started</a>
+
+            <a class="inline-block rounded border border-[#D18949] px-5 py-3 font-medium text-[#D18949] shadow-sm transition-colors hover:bg-[#D18949]/10 hover:text-[#D18949]" href="#projects">Learn More</a>
+          </div>
+        </div>
+
+        <img
+          src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExazZvajd0ZGhkcHYzYW56ZXgwaWo3dnVyNGF6ejM3dGc4djFxYWRwbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/1c9ltJnlPKZ4jhDRpw/giphy.gif"
+          class="mx-auto hidden max-w-md text-gray-900 md:block"
+          alt="" />
+      </div>
+    </section>
+
+    <section class="bg-white lg:h-screen lg:place-content-center" id="services">
+      <div class="container px-6 py-10 mx-auto">
+        <h1 class="text-2xl font-semibold text-center text-gray-800 capitalize lg:text-3xl">
+          explore our
+          <br />
+          awesome
+          <span class="text-[#D18949] font-bold">Services</span>
         </h1>
-        <button class="px-8 py-4 bg-transparent border-2 border-white text-white font-bold rounded-xl hover:bg-white hover:text-[#141E30] transition-all duration-300">
-            OUR WORKS
-        </button>
-    </div>
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2">
-        <span class="block w-6 h-10 border-2 border-white rounded-full relative">
-            <span class="absolute top-2 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-white rounded-full animate-bounce"></span>
+
+        <div class="grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-16 md:grid-cols-2 xl:grid-cols-3">
+          <div class="flex flex-col items-center p-6 space-y-3 text-center bg-[#D18949]/10 rounded-xl">
+            <span class="inline-block p-3 text-[#D18949] bg-[#D18949]/10 rounded-full">
+              <i class="fa-solid fa-cube"></i>
+            </span>
+
+            <h1 class="text-xl font-semibold text-gray-700 capitalize">3D Modelling & Design</h1>
+
+            <p class="text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident ab nulla quod dignissimos vel non corrupti doloribus voluptatum eveniet</p>
+          </div>
+
+          <div class="flex flex-col items-center p-6 space-y-3 text-center bg-[#D18949]/10 rounded-xl">
+            <span class="inline-block p-3 text-[#D18949] bg-[#D18949]/10 rounded-full">
+              <i class="fa-solid fa-pen-nib"></i>
+            </span>
+
+            <h1 class="text-xl font-semibold text-gray-700 capitalize">Graphics Design</h1>
+
+            <p class="text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident ab nulla quod dignissimos vel non corrupti doloribus voluptatum eveniet</p>
+          </div>
+
+          <div class="flex flex-col items-center p-6 space-y-3 text-center bg-[#D18949]/10 rounded-xl">
+            <span class="inline-block p-3 text-[#D18949] bg-[#D18949]/10 rounded-full">
+              <i class="fa-solid fa-camera"></i>
+            </span>
+
+            <h1 class="text-xl font-semibold text-gray-700 capitalize">IoT Development</h1>
+
+            <p class="text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident ab nulla quod dignissimos vel non corrupti doloribus voluptatum eveniet</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-16 md:grid-cols-2 xl:grid-cols-3">
+          <div class="flex flex-col items-center p-6 space-y-3 text-center bg-[#D18949]/10 rounded-xl">
+            <span class="inline-block p-3 text-[#D18949] bg-[#D18949]/10 rounded-full">
+              <i class="fa-solid fa-microchip"></i>
+            </span>
+
+            <h1 class="text-xl font-semibold text-gray-700 capitalize">AI & Machine Learning</h1>
+
+            <p class="text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident ab nulla quod dignissimos vel non corrupti doloribus voluptatum eveniet</p>
+          </div>
+
+          <div class="flex flex-col items-center p-6 space-y-3 text-center bg-[#D18949]/10 rounded-xl">
+            <span class="inline-block p-3 text-[#D18949] bg-[#D18949]/10 rounded-full">
+              <i class="fa-solid fa-database"></i>
+            </span>
+
+            <h1 class="text-xl font-semibold text-gray-700 capitalize">Database Management</h1>
+
+            <p class="text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident ab nulla quod dignissimos vel non corrupti doloribus voluptatum eveniet</p>
+          </div>
+
+          <div class="flex flex-col items-center p-6 space-y-3 text-center bg-[#D18949]/10 rounded-xl">
+            <span class="inline-block p-3 text-[#D18949] bg-[#D18949]/10 rounded-full">
+              <i class="fa-solid fa-compass-drafting"></i>
+            </span>
+
+            <h1 class="text-xl font-semibold text-gray-700 capitalize">Setup Management</h1>
+
+            <p class="text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident ab nulla quod dignissimos vel non corrupti doloribus voluptatum eveniet</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white lg:h-screen lg:place-content-center" id="projects">
+      <div class="container px-6 mx-auto">
+        <h1 class="text-2xl font-semibold text-center text-gray-800 capitalize lg:text-3xl">Latest Work</h1>
+
+        <div class="flex py-4 mt-4 overflow-x-auto overflow-y-hidden md:justify-center" id="category-buttons">
+          <button data-category="all" class="filter-btn h-12 px-8 py-2 -mb-px text-sm text-center text-blue-600 bg-transparent border-b-2 border-blue-500 sm:text-base whitespace-nowrap focus:outline-none">All</button>
+          <button data-category="3d" class="filter-btn h-12 px-8 py-2 -mb-px text-sm text-center text-gray-700 bg-transparent border-b-2 border-gray-200 sm:text-base whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400">
+            3D Modelling
+          </button>
+          <button data-category="animation" class="filter-btn h-12 px-8 py-2 -mb-px text-sm text-center text-gray-700 bg-transparent border-b-2 border-gray-200 sm:text-base whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400">
+            Animation
+          </button>
+          <button data-category="web" class="filter-btn h-12 px-8 py-2 -mb-px text-sm text-center text-gray-700 bg-transparent border-b-2 border-gray-200 sm:text-base whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400">
+            Web Development
+          </button>
+          <button data-category="game" class="filter-btn h-12 px-8 py-2 -mb-px text-sm text-center text-gray-700 bg-transparent border-b-2 border-gray-200 sm:text-base whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400">
+            Game Development
+          </button>
+        </div>
+
+        <ul class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-24" id="projects-container">
+          <li class="project-item" data-category="3d">
+            <a href="#" class="group block overflow-hidden">
+              <img src="https://www.dummyimage.co.uk/600x400/cbcbcb/959595/Dummy%20Image/40" alt="" class="h-[300px] w-full object-cover transition duration-500 group-hover:scale-105 rounded-lg" />
+              <div class="relative bg-white pt-3">
+                <h3 class="text-sm text-gray-700 group-hover:underline group-hover:underline-offset-4">Monkey</h3>
+                <p class="mt-1 text-xs text-gray-500">3D Project</p>
+              </div>
+            </a>
+          </li>
+
+          <li class="project-item" data-category="animation">
+            <a href="#" class="group block overflow-hidden">
+              <img src="https://www.dummyimage.co.uk/600x400/cbcbcb/959595/Dummy%20Image/40" alt="" class="h-[300px] w-full object-cover transition duration-500 group-hover:scale-105 rounded-lg" />
+              <div class="relative bg-white pt-3">
+                <h3 class="text-sm text-gray-700 group-hover:underline group-hover:underline-offset-4">Banana</h3>
+                <p class="mt-1 text-xs text-gray-500">Animation</p>
+              </div>
+            </a>
+          </li>
+
+          <li class="project-item" data-category="web">
+            <a href="#" class="group block overflow-hidden">
+              <img src="https://www.dummyimage.co.uk/600x400/cbcbcb/959595/Dummy%20Image/40" alt="" class="h-[300px] w-full object-cover transition duration-500 group-hover:scale-105 rounded-lg" />
+              <div class="relative bg-white pt-3">
+                <h3 class="text-sm text-gray-700 group-hover:underline group-hover:underline-offset-4">Monkey Website</h3>
+                <p class="mt-1 text-xs text-gray-500">Web Design</p>
+              </div>
+            </a>
+          </li>
+
+          <li class="project-item" data-category="game">
+            <a href="#" class="group block overflow-hidden">
+              <img src="https://www.dummyimage.co.uk/600x400/cbcbcb/959595/Dummy%20Image/40" alt="" class="h-[300px] w-full object-cover transition duration-500 group-hover:scale-105 rounded-lg" />
+              <div class="relative bg-white pt-3">
+                <h3 class="text-sm text-gray-700 group-hover:underline group-hover:underline-offset-4">Finding Monkey</h3>
+                <p class="mt-1 text-xs text-gray-500">Game Design</p>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="bg-white lg:h-screen lg:place-content-center" id="contact">
+      <div class="container px-6 py-12 mx-auto">
+        <div class="lg:flex lg:items-center lg:-mx-6">
+          <div class="lg:w-1/2 lg:mx-6">
+            <h1 class="text-2xl font-bold text-gray-800 capitalize lg:text-3xl">Get in Touch</h1>
+
+            <div class="mt-6 space-y-8 md:mt-8">
+              <p class="flex items-start -mx-2">
+                <i class="fa-solid fa-location-dot text-2xl mx-2 text-[#D18949]"></i>
+
+                <span class="mx-2 text-gray-700 truncate w-72">Lorem ipsum dolor sit.</span>
+              </p>
+
+              <p class="flex items-start -mx-2">
+                <i class="fa-solid fa-phone text-2xl mx-2 text-[#D18949]"></i>
+
+                <span class="mx-2 text-gray-700 truncate w-72">(257) 563-7401</span>
+              </p>
+
+              <p class="flex items-start -mx-2">
+                <i class="fa-solid fa-envelope text-2xl mx-2 text-[#D18949]"></i>
+
+                <span class="mx-2 text-gray-700 truncate w-72">acb@example.com</span>
+              </p>
+            </div>
+
+            <div class="mt-6 w-80 md:mt-8">
+              <h3 class="text-gray-600">Follow us</h3>
+
+              <div class="flex mt-4 -mx-1.5">
+                <a class="mx-1.5 text-gray-400 transition-colors duration-300 transform hover:text-[#D18949]" href="#">
+                  <i class="fa-brands fa-instagram text-4xl"></i>
+                </a>
+
+                <a class="mx-1.5 text-gray-400 transition-colors duration-300 transform hover:text-[#D18949]" href="#">
+                  <i class="fa-brands fa-square-x-twitter text-4xl"></i>
+                </a>
+
+                <a class="mx-1.5 text-gray-400 transition-colors duration-300 transform hover:text-[#D18949]" href="#">
+                  <i class="fa-brands fa-github text-4xl"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 lg:w-1/2 lg:mx-6">
+            <div class="w-full px-8 py-10 mx-auto overflow-hidden bg-white rounded-lg">
+              <h1 class="text-lg font-medium text-gray-700">What do you want to ask</h1>
+
+              <div class="mt-6">
+                <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExOXFsZnV4cDI2ZnhrYXhhMjhxYWw0cW1vYjAxN2c2dGpzb3VnbHJhMCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o6Zt1n7gVWIVDVKEg/giphy.gif" alt="" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white lg:h-screen lg:place-content-center" id="about">
+      <div class="container px-6 py-10 mx-auto">
+        <h1 class="text-2xl font-semibold text-center text-gray-800 capitalize lg:text-3xl">our team</h1>
+
+        <p class="max-w-2xl mx-auto my-6 text-center text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo incidunt ex placeat modi magni quia error alias, adipisci rem similique, at omnis eligendi optio eos harum.</p>
+
+        <div class="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-5">
+          <div class="flex flex-col items-center">
+            <img class="object-cover w-full rounded-xl aspect-square" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80" alt="" />
+
+            <h1 class="mt-4 text-2xl font-semibold text-gray-700 capitalize">arthur melo</h1>
+
+            <p class="mt-2 text-gray-500 capitalize">design director</p>
+
+            <div class="flex mt-3 -mx-2">
+              <a href="#" class="mx-2 text-gray-600 transition-colors duration-300 hover:text-[#D18949]" aria-label="Instagram">
+                <i class="fa-brands fa-instagram text-xl"></i>
+              </a>
+
+              <a href="#" class="mx-2 text-gray-600 transition-colors duration-300 hover:text-[#D18949]" aria-label="Facebook">
+                <i class="fa-brands fa-facebook text-xl"></i>
+              </a>
+
+              <a href="#" class="mx-2 text-gray-600 transition-colors duration-300 hover:text-[#D18949]" aria-label="Github">
+                <i class="fa-brands fa-github text-xl"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="flex flex-col items-center">
+            <img class="object-cover w-full rounded-xl aspect-square" src="https://images.unsplash.com/photo-1531590878845-12627191e687?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80" alt="" />
+
+            <h1 class="mt-4 text-2xl font-semibold text-gray-700 capitalize">Pamela Anderson</h1>
+
+            <p class="mt-2 text-gray-500 capitalize">Lead Developer</p>
+
+            <div class="flex mt-3 -mx-2">
+              <a href="#" class="mx-2 text-gray-600 transition-colors duration-300 hover:text-[#D18949]" aria-label="Instagram">
+                <i class="fa-brands fa-instagram text-xl"></i>
+              </a>
+
+              <a href="#" class="mx-2 text-gray-600 transition-colors duration-300 hover:text-[#D18949]" aria-label="Facebook">
+                <i class="fa-brands fa-facebook text-xl"></i>
+              </a>
+
+              <a href="#" class="mx-2 text-gray-600 transition-colors duration-300 hover:text-[#D18949]" aria-label="Github">
+                <i class="fa-brands fa-github text-xl"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="flex flex-col items-center">
+            <img class="object-cover w-full rounded-xl aspect-square" src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80" alt="" />
+
+            <h1 class="mt-4 text-2xl font-semibold text-gray-700 capitalize">John Doe</h1>
+
+            <p class="mt-2 text-gray-500 capitalize">Full stack developer</p>
+
+            <div class="flex mt-3 -mx-2">
+              <a href="#" class="mx-2 text-gray-600 transition-colors duration-300 hover:text-[#D18949]" aria-label="Instagram">
+                <i class="fa-brands fa-instagram text-xl"></i>
+              </a>
+
+              <a href="#" class="mx-2 text-gray-600 transition-colors duration-300 hover:text-[#D18949]" aria-label="Facebook">
+                <i class="fa-brands fa-facebook text-xl"></i>
+              </a>
+
+              <a href="#" class="mx-2 text-gray-600 transition-colors duration-300 hover:text-[#D18949]" aria-label="Github">
+                <i class="fa-brands fa-github text-xl"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="flex flex-col items-center">
+            <img class="object-cover w-full rounded-xl aspect-square" src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80" alt="" />
+
+            <h1 class="mt-4 text-2xl font-semibold text-gray-700 capitalize">John Doe</h1>
+
+            <p class="mt-2 text-gray-500 capitalize">Full stack developer</p>
+
+            <div class="flex mt-3 -mx-2">
+              <a href="#" class="mx-2 text-gray-600 transition-colors duration-300 hover:text-[#D18949]" aria-label="Instagram">
+                <i class="fa-brands fa-instagram text-xl"></i>
+              </a>
+
+              <a href="#" class="mx-2 text-gray-600 transition-colors duration-300 hover:text-[#D18949]" aria-label="Facebook">
+                <i class="fa-brands fa-facebook text-xl"></i>
+              </a>
+
+              <a href="#" class="mx-2 text-gray-600 transition-colors duration-300 hover:text-[#D18949]" aria-label="Github">
+                <i class="fa-brands fa-github text-xl"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="flex flex-col items-center">
+            <img class="object-cover w-full rounded-xl aspect-square" src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80" alt="" />
+
+            <h1 class="mt-4 text-2xl font-semibold text-gray-700 capitalize">John Doe</h1>
+
+            <p class="mt-2 text-gray-500 capitalize">Full stack developer</p>
+
+            <div class="flex mt-3 -mx-2">
+              <a href="#" class="mx-2 text-gray-600 transition-colors duration-300 hover:text-[#D18949]" aria-label="Instagram">
+                <i class="fa-brands fa-instagram text-xl"></i>
+              </a>
+
+              <a href="#" class="mx-2 text-gray-600 transition-colors duration-300 hover:text-[#D18949]" aria-label="Facebook">
+                <i class="fa-brands fa-facebook text-xl"></i>
+              </a>
+
+              <a href="#" class="mx-2 text-gray-600 transition-colors duration-300 hover:text-[#D18949]" aria-label="Github">
+                <i class="fa-brands fa-github text-xl"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="bg-[#D18949]/75">
+      <div class="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
+        <div class="flex justify-center">
+          <img src="https://github.com/CatandCStudio-dev/WebSitePorto/blob/main/assets/media/cnc_blank_putih.png?raw=true" class="h-24 -mb-4" alt="" />
+        </div>
+
+        <p class="mx-auto mt-6 max-w-xl text-center leading-relaxed text-white">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt consequuntur amet culpa cum itaque neque.</p>
+
+        <span class="flex items-center my-6">
+          <span class="h-px flex-1 bg-white"></span>
+
+          <span class="shrink-0 px-4 text-white">
+            <i class="fa-solid fa-paw"></i>
+            <i class="fa-solid fa-paw"></i>
+            <i class="fa-solid fa-paw"></i>
+            <i class="fa-solid fa-paw"></i>
+            <i class="fa-solid fa-paw"></i>
+          </span>
+
+          <span class="h-px flex-1 bg-white"></span>
         </span>
-    </div>
-</main>
 
-<!-- Services Section -->
-    <section id="services" class="bg-[#141E30] py-24">
-    <div class="container mx-auto px-4">
-        <h2 class="text-4xl font-black text-white text-center mb-16">OUR SERVICES</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Service Card 1 -->
-            <div class="p-8 border-2 border-white/20 rounded-2xl bg-transparent hover:bg-[#3b3b57] hover:-translate-y-2 transition-all duration-300 relative overflow-hidden group">
-                <h3 class="text-2xl text-white mb-4">3D Modelling & Design</h3>
-                <p class="text-white/80">Kami menyediakan layanan pembuatan model 3D untuk game, animasi, arsitektur, dan produk.</p>
-                <div class="absolute -bottom-8 -right-8 w-10 h-10 bg-[url('../media/paw64.png')] bg-cover opacity-0 group-hover:opacity-100 group-hover:bottom-0 group-hover:right-4 transition-all duration-300"></div>
-            </div>
+        <ul class="mt-12 flex flex-wrap justify-center gap-6 md:gap-8 lg:gap-12">
+          <li>
+            <a class="text-white transition hover:underline" href="#">About</a>
+          </li>
 
-            <!-- Service Card 2 -->
-            <div class="p-8 border-2 border-white/20 rounded-2xl bg-transparent hover:bg-[#3b3b57] hover:-translate-y-2 transition-all duration-300 relative overflow-hidden group">
-                <h3 class="text-2xl text-[white] mb-4">Graphic Design</h3>
-                <p class="text-white/80">Kami membuat desain visual dan identitas brand yang kuat — mulai dari logo, poster, hingga UI.</p>
-                <div class="absolute -bottom-8 -right-8 w-10 h-10 bg-[url('../media/paw64.png')] bg-cover opacity-0 group-hover:opacity-100 group-hover:bottom-0 group-hover:right-4 transition-all duration-300"></div>
-            </div>
+          <li>
+            <a class="text-white transition hover:underline" href="#">Careers</a>
+          </li>
 
-            <!-- Service Card 3 -->
-            <div class="p-8 border-2 border-white/20 rounded-2xl bg-transparent hover:bg-[#3b3b57] hover:-translate-y-2 transition-all duration-300 relative overflow-hidden group">
-                <h3 class="text-2xl text-[white] mb-4">IoT Development</h3>
-                <p class="text-white/80">Kami mengembangkan dan memberikan servis berbasis Internet of Things (IoT).</p>
-                <div class="absolute -bottom-8 -right-8 w-10 h-10 bg-[url('../media/paw64.png')] bg-cover opacity-0 group-hover:opacity-100 group-hover:bottom-0 group-hover:right-4 transition-all duration-300"></div>
-            </div>
+          <li>
+            <a class="text-white transition hover:underline" href="#">History</a>
+          </li>
 
-            <!-- Service Card 4 -->
-            <div class="p-8 border-2 border-white/20 rounded-2xl bg-transparent hover:bg-[#3b3b57] hover:-translate-y-2 transition-all duration-300 relative overflow-hidden group">
-                <h3 class="text-2xl text-[white] mb-4">AI & Machine Learning</h3>
-                <p class="text-white/80">Kami mengembangkan model Artificial Intelligence dan Machine Learning serta implementasinya.</p>
-                <div class="absolute -bottom-8 -right-8 w-10 h-10 bg-[url('../media/paw64.png')] bg-cover opacity-0 group-hover:opacity-100 group-hover:bottom-0 group-hover:right-4 transition-all duration-300"></div>
-            </div>
+          <li>
+            <a class="text-white transition hover:underline" href="#">Services</a>
+          </li>
 
-            <!-- Service Card 5 -->
-            <div class="p-8 border-2 border-white/20 rounded-2xl bg-transparent hover:bg-[#3b3b57] hover:-translate-y-2 transition-all duration-300 relative overflow-hidden group">
-                <h3 class="text-2xl text-[white] mb-4">Database Management</h3>
-                <p class="text-white/80">Kami membantu membangun dan mengelola database yang aman, efisien, dan mudah diintegrasikan.</p>
-                <div class="absolute -bottom-8 -right-8 w-10 h-10 bg-[url('../media/paw64.png')] bg-cover opacity-0 group-hover:opacity-100 group-hover:bottom-0 group-hover:right-4 transition-all duration-300"></div>
-            </div>
+          <li>
+            <a class="text-white transition hover:underline" href="#">Projects</a>
+          </li>
 
-            <!-- Service Card 6 -->
-            <div class="p-8 border-2 border-white/20 rounded-2xl bg-transparent hover:bg-[#3b3b57] hover:-translate-y-2 transition-all duration-300 relative overflow-hidden group">
-                <h3 class="text-2xl text-[white] mb-4">Setup Management</h3>
-                <p class="text-white/80">Kami membantu membangun server Discord profesional Serta menyediakan jasa pembuatan dan kustomisasi Linktree.</p>
-                <div class="absolute -bottom-8 -right-8 w-10 h-10 bg-[url('../media/paw64.png')] bg-cover opacity-0 group-hover:opacity-100 group-hover:bottom-0 group-hover:right-4 transition-all duration-300"></div>
-            </div>
-        </div>
-    </div>
-</section>
+          <li>
+            <a class="text-white transition hover:underline" href="#">Blog</a>
+          </li>
+        </ul>
 
-<!-- Projects Section -->
-<section id="projects" class="relative min-h-screen bg-[#141E30] py-12 overflow-hidden">
-  <div class="container mx-auto px-4 mb-16">
-    <h2 class="text-2xl font-black text-white text-center relative z-10">OUR PROJECTS</h2>
-    
-    <!-- Project Categories -->
-  <div class="flex justify-center gap-4 mt-8 mb-12">
-            <button class="category-btn active px-6 py-2 rounded-full bg-white text-[#141E30] font-semibold transition-all duration-300 shadow-lg" data-category="all">
-                All Projects
-            </button>
-            <button class="category-btn px-6 py-2 rounded-full bg-white/10 text-white hover:bg-white hover:text-[#141E30] transition-all duration-300 font-semibold" data-category="3d">
-                3D Models
-            </button>
-            <button class="category-btn px-6 py-2 rounded-full bg-white/10 text-white hover:bg-white hover:text-[#141E30] transition-all duration-300 font-semibold" data-category="game">
-                Game Dev
-            </button>
-            <button class="category-btn px-6 py-2 rounded-full bg-white/10 text-white hover:bg-white hover:text-[#141E30] transition-all duration-300 font-semibold" data-category="web">
-                Web Apps
-            </button>
-        </div>
-    <!-- Project Showcase -->
-  <div class="project-showcase absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400vw] max-w-[1500px] h-[800px] bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-5xl border border-white/10">
-    <div class="relative w-full h-full slide-container">
-      <!-- Project Items -->
-      <div class="project-items flex gap-16 absolute top-2 left-2 -translate-x-2 -translate-y-2 w-full transition-all duration-700">
-        <!-- Active Project -->
-        <div class="project-item active relative w-full h-[500px] rounded-2xl overflow-hidden group transition-all duration-500" data-category="3d">
-          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10"></div>
-          <img src="assets/media/that's way i gave up on music 3.png" alt="Project 1" class="w-full h-full object-cover transform scale-100 group-hover:scale-110 transition-transform duration-700">
-          <div class="absolute bottom-0 left-0 w-full p-8 z-20 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-            <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm text-white mb-3">3D Modeling</span>
-            <h3 class="text-3xl font-bold text-white mb-2">Character Design</h3>
-            <p class="text-white/80 mb-4">Detailed 3D character model with high-quality textures and animations.</p>
-            <div class="flex gap-4">
-              <button class="px-6 py-2 bg-white text-[#141E30] rounded-lg font-medium hover:bg-white/90 transform hover:-translate-y-1 transition-all duration-300">
-                View Project
-              </button>
-              <button class="px-6 py-2 bg-transparent border-2 border-white text-white rounded-lg font-medium hover:bg-white/10 transform hover:-translate-y-1 transition-all duration-300">
-                Behind the Scenes
-              </button>e
-            </div>
-          </div>
-          <!-- Tech Stack Badges -->
-          <div class="absolute top-6 right-6 flex gap-2 z-20">
-            <span class="px-3 py-1 bg-white/20 rounded-full text-sm text-white backdrop-blur-sm">Blender</span>
-            <span class="px-3 py-1 bg-white/20 rounded-full text-sm text-white backdrop-blur-sm">Unity</span>
-          </div>
-        </div>
+        <ul class="mt-12 flex justify-center gap-6 md:gap-8">
+          <li>
+            <a href="#" rel="noreferrer" target="_blank" class="text-white transition hover:text-[#D18949]">
+              <i class="fa-brands fa-facebook text-xl"></i>
+            </a>
+          </li>
 
-        <!-- Other Projects (Thumbnails) -->
-        <div class="project-item w-[300px] h-[400px] rounded-2xl overflow-hidden opacity-50 hover:opacity-75 transition-all duration-300 cursor-pointer relative group" data-category="game">
-          <img src="assets/media/that's way i gave up on music 3.png" alt="Project 2" class="w-full h-full object-cover">
-          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          <div class="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <span class="inline-block px-2 py-1 bg-white/20 rounded-full text-xs text-white mb-2">Game Development</span>
-            <h4 class="text-white text-lg font-semibold">RPG Game Project</h4>
-          </div>
-        </div>
+          <li>
+            <a href="#" rel="noreferrer" target="_blank" class="text-white transition hover:text-[#D18949]">
+              <i class="fa-brands fa-instagram text-xl"></i>
+            </a>
+          </li>
 
-        <div class="project-item w-[300px] h-[400px] rounded-2xl overflow-hidden opacity-50 hover:opacity-75 transition-all duration-300 cursor-pointer relative group" data-category="web">
-          <img src="assets/media/that's way i gave up on music 3.png" alt="Project 3" class="w-full h-full object-cover">
-          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          <div class="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <span class="inline-block px-2 py-1 bg-white/20 rounded-full text-xs text-white mb-2">Web Development</span>
-            <h4 class="text-white text-lg font-semibold">E-Commerce Platform</h4>
-          </div>
-        </div>
+          <li>
+            <a href="#" rel="noreferrer" target="_blank" class="text-white transition hover:text-[#D18949]">
+              <i class="fa-brands fa-x-twitter text-xl"></i>
+            </a>
+          </li>
 
-        <div class="project-item w-[300px] h-[400px] rounded-2xl overflow-hidden opacity-50 hover:opacity-75 transition-all duration-300 cursor-pointer relative group" data-category="3d">
-          <img src="assets/media/that's way i gave up on music 3.png" alt="Project 4" class="w-full h-full object-cover">
-          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          <div class="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <span class="inline-block px-2 py-1 bg-white/20 rounded-full text-xs text-white mb-2">3D Animation</span>
-            <h4 class="text-white text-lg font-semibold">Animated Short Film</h4>
-          </div>
-        </div>
+          <li>
+            <a href="#" rel="noreferrer" target="_blank" class="text-white transition hover:text-[#D18949]">
+              <i class="fa-brands fa-github text-xl"></i>
+            </a>
+          </li>
+        </ul>
+
+        <p class="mt-12 -mb-6 text-center text-sm text-white">
+          © 2025
+          <a href="https://dickypurnomo.com/">Purnomo Industries.</a>
+          All rights reserved.
+        </p>
       </div>
-
-      <!-- Navigation -->
-      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-4 z-30">
-        <button class="prev-project w-12 h-12 rounded-full bg-white/10 hover:bg-white transition-all duration-300 flex items-center justify-center group">
-          <i class="bi bi-chevron-left text-2xl text-white group-hover:text-[#141E30]"></i>
-        </button>
-        <button class="next-project w-12 h-12 rounded-full bg-white/10 hover:bg-white transition-all duration-300 flex items-center justify-center group">
-          <i class="bi bi-chevron-right text-2xl text-white group-hover:text-[#141E30]"></i>
-        </button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Add new styles -->
-<style>
-@keyframes fadeInScale {
-  from {
-    opacity: 0;
-    transform: scale(0.9) translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-.project-item.active {
-  animation: fadeInScale 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-</style>
-
-<!-- Enhanced project showcase script -->
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const container = document.querySelector('.project-items');
-  const items = document.querySelectorAll('.project-item');
-  const nextBtn = document.querySelector('.next-project');
-  const prevBtn = document.querySelector('.prev-project');
-  const categoryBtns = document.querySelectorAll('.category-btn');
-  
-  // Set fixed width for project items
-  items.forEach(item => {
-    item.style.width = '800px';
-    item.style.flexShrink = '0';
-  });
-
-  let currentIndex = 0;
-  let currentCategory = 'all';
-  let filteredItems = [...items];
-
-  // Filter projects by category
-  function filterProjects(category) {
-    currentCategory = category;
-    categoryBtns.forEach(btn => {
-      if (btn.dataset.category === category) {
-        btn.classList.add('active', 'bg-white', 'text-[#141E30]');
-        btn.classList.remove('bg-white/10', 'text-white');
-      } else {
-        btn.classList.remove('active', 'bg-white', 'text-[#141E30]');
-        btn.classList.add('bg-white/10', 'text-white');
-      }
-    });
-
-    items.forEach(item => {
-      if (category === 'all' || item.dataset.category === category) {
-        item.style.display = 'block';
-        item.classList.add('animate-fadeIn');
-      } else {
-        item.style.display = 'none';
-        item.classList.remove('animate-fadeIn');
-      }
-    });
-
-    // Update filtered items
-    filteredItems = [...items].filter(item => 
-      category === 'all' || item.dataset.category === category
-    );
-    
-    // Reset to first item of filtered list
-    currentIndex = 0;
-    updateSlider();
-  }
-
-  function updateSlider() {
-    const offset = currentIndex * -100;
-    container.style.transform = `translate(-50%, -50%) translateX(${offset}px)`;
-    
-    filteredItems.forEach((item, index) => {
-      if (index === currentIndex) {
-        item.classList.add('active');
-        // Add floating animation to active item
-        item.style.animation = 'float 6s ease-in-out infinite';
-      } else {
-        item.classList.remove('active');
-        item.style.animation = '';
-      }
-
-      // Update opacity and scale based on distance from active item
-      const distance = Math.abs(index - currentIndex);
-      item.style.opacity = distance === 0 ? 1 : Math.max(0.5 - (distance * 0.2), 0.2);
-      item.style.transform = `scale(${distance === 0 ? 1 : 0.9})`;
-    });
-  }
-
-  // Navigation event listeners
-  nextBtn?.addEventListener('click', () => {
-    currentIndex = (currentIndex + 1) % filteredItems.length;
-    updateSlider();
-  });
-
-  prevBtn?.addEventListener('click', () => {
-    currentIndex = (currentIndex - 1 + filteredItems.length) % filteredItems.length;
-    updateSlider();
-  });
-
-  // Category filter event listeners
-  categoryBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterProjects(btn.dataset.category);
-    });
-  });
-
-  // Mouse wheel navigation
-  container.addEventListener('wheel', (e) => {
-    e.preventDefault();
-    if (e.deltaY > 0) {
-      nextBtn.click();
-    } else {
-      prevBtn.click();
-    }
-  }, { passive: false });
-
-  // Touch swipe navigation
-  let touchStartX = 0;
-  container.addEventListener('touchstart', (e) => {
-    touchStartX = e.touches[0].clientX;
-  });
-
-  container.addEventListener('touchend', (e) => {
-    const touchEndX = e.changedTouches[0].clientX;
-    const diff = touchStartX - touchEndX;
-
-    if (Math.abs(diff) > 50) { // Minimum swipe distance
-      if (diff > 0) {
-        nextBtn.click();
-      } else {
-        prevBtn.click();
-      }
-    }
-  });
-
-  // Initialize
-  updateSlider();
-});
-</script>
-
-<!-- Project animation styles -->
-<style>
-  @keyframes projectFadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-      filter: blur(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-      filter: blur(0);
-    }
-  }
-
-  .project-item.active {
-    animation: projectFadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  }
-</style>
-
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const nextBtn = document.querySelector('.next');
-    const prevBtn = document.querySelector('.prev');
-    const slideContainer = document.querySelector('.slide');
-
-    if (!nextBtn || !prevBtn || !slideContainer) return;
-
-    nextBtn.onclick = function () {
-      let items = document.querySelectorAll('.slide > div');
-      slideContainer.appendChild(items[0]);
-    }
-
-    prevBtn.onclick = function () {
-      let items = document.querySelectorAll('.slide > div');
-      slideContainer.prepend(items[items.length - 1]);
-    }
-  });
-</script>
-
-<!-- About Section -->
-    <section id="about" class=" py-24">
-    <div class=" mx-auto px-4">
-        <!-- Section Title -->
-        <h2 class="text-4xl font-black text-white text-center mb-16">ABOUT US</h2>        <!-- About Content -->
-        <div class="max-w-3xl mx-auto text-center">
-            <div class="text-white text-lg leading-relaxed">
-                <p class="mb-4">Cat and Coffee Studio adalah sebuah studio kreatif yang berfokus pada pengembangan teknologi dan desain inovatif. Kami percaya bahwa ide-ide terbaik lahir dari kombinasi kreativitas dan teknologi mutakhir.</p>
-                <p>Bergabunglah dengan kami dalam perjalanan menciptakan masa depan yang lebih cerah dan penuh warna!</p>
-            </div>
-        </div>
-
-        <!-- Profile Slider -->
-        <div class="relative mx-auto mt-16 max-w-6xl  bg-red-500">
-            <!-- Prev Button -->
-            <button class="prev absolute -left-20 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-[white] transition-all flex items-center justify-center z-10 group">
-                <i class="bi bi-chevron-left text-2xl text-[white] group-hover:text-[#141E30]"></i>
-            </button>
-
-            <!-- Profiles Container -->
-            <div class="overflow-hidden">
-                <div class="slide flex transition-transform duration-500">
-                    <!-- Profile 1 -->
-                    <div class="min-w-full flex flex-col pt-32 p-10 border-2 border-white/20 rounded-2xl bg-gradient-to-b from-[#141E30]/80 to-[#141E30] relative">
-                        <div class="flex-1 pr-40">
-                            <h1 class="text-7xl font-black text-white uppercase mb-2 leading-none">LYCHNUS</h1>
-                            <div class="text-2xl text-white/80 uppercase font-semibold mb-8">game artis</div>
-                            <div class="mt-8 pt-8 border-t border-white/10 w-72">
-                                <div class="text-lg text-white font-medium text-center">
-                                    sebuah entitas hitam yang jago membuat aset game
-                                </div>
-                            </div>
-                        </div>
-                        <div class="absolute right-10 -top-0 w-flex h-[500px] z-40">
-                            <img src="./assets/media/lychnus.png" alt="Lychnus Profile" class="w-full h-full object-contain drop-shadow-2xl">
-                        </div>
-                    </div>
-
-                    <!-- Profile 2 -->
-                    <div class="min-w-full flex flex-col pt-32 p-10 border-2 border-white/20 rounded-2xl bg-gradient-to-b from-[#141E30]/80 to-[#141E30] relative">
-                        <div class="flex-1 pr-40">
-                            <h1 class="text-7xl font-black text-white uppercase mb-2 leading-none">LUCA</h1>
-                            <div class="text-2xl text-white/80 uppercase font-semibold mb-8">Game Developer</div>
-                            <div class="mt-8 pt-8 border-t border-white/10 w-72">
-                                <div class="text-lg text-white font-medium text-center">
-                                    Spesialis dalam menciptakan pengalaman pengguna yang intuitif
-                                </div>
-                            </div>
-                        </div>
-                       <div class="absolute right-10 -top-0 w-flex h-[600px] z-40">
-                            <img src="./assets/media/luca.png" alt="Luca Profile" class="w-full h-full object-contain drop-shadow-2xl">
-                        </div>
-                    </div>
-
-                    <!-- Profile 3 -->
-                    <div class="min-w-fullflex flex-col pt-32 p-10 border-2 border-white/20 rounded-2xl bg-gradient-to-b from-[#141E30]/80 to-[#141E30] relative">
-                            <div class="flex-1 pr-40">
-                                <h1 class="text-7xl font-black text-white uppercase mb-2 leading-none">xevorine</h1>
-                                <div class="text-2xl text-white/80 uppercase font-semibold mb-8">AI/ML Specialist</div>
-                                <div class="mt-8 pt-8 border-t border-white/10 w-72">
-                                    <div class="text-lg text-white font-medium text-center">
-                                        Ahli dalam mengembangkan solusi AI dan Machine Learning
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="absolute right-10 -top-0 w-flex h-[500px] z-40">
-                                <img src="./assets/media/xevorine.png" alt="Xevorine Profile" class="w-full h-full object-contain drop-shadow-2xl">
-                            </div>
-                        </div>
-                </div>
-            </div>
-
-            <!-- Next Button -->
-            <button class="next absolute -right-20 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-[white] transition-all flex items-center justify-center z-10 group">
-                <i class="bi bi-chevron-right text-2xl text-[white] group-hover:text-[#141E30]"></i>
-            </button>
-        </div>
-    </div>
-</section>
-<!-- Contact Section -->
-<section id="contact" class="bg-[#141E30] py-24">
-    <div class="container mx-auto px-4">
-        <h2 class="text-4xl font-black text-[#FFFFFF] text-center mb-16">Let's Brew Your Project</h2>
-        <div class="max-w-4xl mx-auto text-center">
-            <p class="text-2xl text-white font-medium mb-4">"Every great project starts with a small spark, let's brew yours."</p>
-            <p class="text-lg text-white/80 leading-relaxed mb-12">
-                Hubungi kami dan biarkan kreativitasmu tumbuh bersama C&C Studio. Kami terbuka untuk kolaborasi, obrolan santai, atau bahkan brainstorming sambil ngopi. 
-            </p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-                <!-- Email Card -->
-                <a href="mailto:coffeecat0005@gmail.com" 
-                    class="flex items-center p-6 bg-white/5 border border-white/10 rounded-xl hover:border-[white] hover:-translate-y-1 transition-all group"
-                    onclick="
-                    const to = 'coffeecat0005@gmail.com';
-                    const subject = 'Pemesanan Layanan';
-                    const body = 'Halo admin,%0A%0A';
-                    const gmailWeb = `https://mail.google.com/mail/?view=cm&fs=1&to=${to}&su=${subject}&body=${body}`;
-                    const gmailApp = `intent://compose?to=${to}&subject=${subject}&body=${body}#Intent;scheme=mailto;package=com.google.android.gm;end`;
-                    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-                    if (isMobile && navigator.userAgent.includes('Android')) {
-                        window.location = gmailApp;
-                    } else {
-                        window.open(gmailWeb, '_blank');
-                    }
-                    return false;">
-                    <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center mr-4">
-                        <i class="bi bi-envelope-fill text-[#141E30] text-2xl"></i>
-                    </div>
-                    <div class="text-left">
-                        <h4 class="text-white text-xl mb-1">Email</h4>
-                        <p class="text-white/80 text-sm">coffeecat0005@gmail.com</p>
-                    </div>
-                </a>
-
-                <!-- Instagram Card -->
-                <a href="https://www.instagram.com/catcoffee_studio/" 
-                    class="flex items-center p-6 bg-white/5 border border-white/10 rounded-xl hover:border-[white] hover:-translate-y-1 transition-all group"
-                    onclick="window.open('https://www.instagram.com/catcoffee_studio/', '_blank'); return false;">
-                    <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center mr-4">
-                        <i class="bi bi-instagram text-[#141E30] text-2xl"></i>
-                    </div>
-                    <div class="text-left">
-                        <h4 class="text-white text-xl mb-1">Instagram</h4>
-                        <p class="text-white/80 text-sm">catcoffee_studio</p>
-                    </div>
-                </a>
-
-                <!-- WhatsApp Card -->
-                <a href="https://wa.me/6285117660558" 
-                    class="flex items-center p-6 bg-white/5 border border-white/10 rounded-xl hover:border-[white] hover:-translate-y-1 transition-all group"
-                    onclick="window.open('https://wa.me/6285117660558', '_blank'); return false;">
-                    <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center mr-4">
-                        <i class="bi bi-whatsapp text-[#141E30] text-2xl"></i>
-                    </div>
-                    <div class="text-left">
-                        <h4 class="text-white text-xl mb-1">WhatsApp</h4>
-                        <p class="text-white/80 text-sm">+62 851-1766-0558</p>
-                    </div>
-                </a>
-            </div>
-
-            <!-- Fun Fact -->
-            <div class="flex items-center justify-center gap-4 bg-white/5 rounded-xl p-8 mt-12">
-                <i class="bi bi-cup-hot-fill text-[white] text-3xl"></i>
-                <p class="text-white/80 text-lg">Kami menjawab pesan sambil ngopi, jadi dijamin responsnya hangat dan friendly!</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-    <!-- Footer -->
-    <footer class="bg-[#141E30] text-white py-6">
-        <div class="container mx-auto px-4 text-center">
-            <p class="text-sm">&copy; 2024 Cat and Coffee Studio. All rights reserved.</p>
-        </div>
     </footer>
 
-    <script src="assets/js/navbar.js"></script>
-    <script src="assets/js/preload.js"></script>
-    <script src="assets/js/slider.js"></script>
+    <script>
+      const buttons = document.querySelectorAll(".filter-btn");
+      const items = document.querySelectorAll(".project-item");
+
+      buttons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          buttons.forEach((b) => {
+            b.classList.remove("text-blue-600", "border-blue-500");
+            b.classList.add("text-gray-700", "border-gray-200");
+          });
+          btn.classList.remove("text-gray-700", "border-gray-200");
+          btn.classList.add("text-blue-600", "border-blue-500");
+
+          const category = btn.getAttribute("data-category");
+
+          items.forEach((item) => {
+            const match = category === "all" || item.dataset.category === category;
+            item.style.display = match ? "block" : "none";
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
