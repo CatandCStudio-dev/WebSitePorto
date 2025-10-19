@@ -3,7 +3,7 @@
 /*
 * File ini berisi styling khusus untuk halaman portfolio.
 * Tujuannya adalah memberikan jarak yang pas antara header dan konten utama,
-* serta memastikan layout project card konsisten dengan halaman utama.
+* serta menata tampilan daftar kategori proyek.
 */
 
 /* Gaya untuk judul section agar konsisten dengan halaman utama */
@@ -17,74 +17,41 @@
 
 /* Memberi jarak atas pada section utama agar tidak tertutup navbar */
 main .project-section {
-    padding-top: 150px; /* Jarak dari atas halaman */
-    padding-bottom: 100px; /* Jarak di bagian bawah halaman */
+    padding-top: 150px;
+    padding-bottom: 100px;
 }
 
-.project-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
+/* ✅ STYLING BARU UNTUK DAFTAR KATEGORI */
+.project-category-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Jarak antar item kategori */
 }
 
-.project-card {
+.category-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem; /* Padding agar terasa luas */
     background-color: transparent;
     border: 2px solid rgba(255, 255, 255, 0.2);
     border-radius: 16px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
-    
-    /* Tambahan untuk efek paw.png */
-    position: relative; /* Penting agar elemen pseudo bisa diposisikan relatif terhadap card */
-    overflow: hidden; /* Penting agar paw tidak terlihat sebelum muncul */
+    text-decoration: none;
+    color: var(--primary-color);
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.project-card:hover {
-    background-color: #3b3b57; /* Tambahkan background-color saat hover */
-    transform: translateY(-10px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+.category-item:hover {
+    background-color: #3b3b57; /* Warna latar saat di-hover */
+    transform: translateX(10px); /* Efek geser ke kanan saat di-hover */
 }
 
-/* Efek Paw.png untuk Project Card */
-.project-card::after {
-    content: '';
-    position: absolute;
-    bottom: -32px; /* Awalnya di luar, 32px adalah tinggi paw */
-    right: -32px;  /* Awalnya di luar, 32px adalah lebar paw */
-    width: 42px;
-    height: 42px;
-    background-image: url('../media/paw64.png'); /* Sesuaikan path jika berbeda */
-    background-size: cover;
-    transition: all 0.3s ease-out; /* Transisi untuk muncul */
-    opacity: 0; /* Awalnya tidak terlihat */
+.category-name {
+    font-size: 1.8rem;
+    font-weight: 600;
 }
 
-.project-card:hover::after {
-    bottom: 0px; /* Posisi akhir dari bawah */
-    right: 15px; /* Posisi akhir dari kanan */
-    opacity: 1; /* Menjadi terlihat */
-}
-
-.project-card img {
-    width: 100%;
-    height: 220px;
-    object-fit: cover;
-    display: block;
-}
-
-.project-card .project-info {
-    padding: 20px;
-}
-
-.project-card h3 {
-    font-size: 1.5rem;
-    padding-left: 8px;
-    padding-right: 8px;
-}
-
-.project-card p {
-    color: var(--secondary-color);
-    padding-left: 12px;
-    padding-right: 12px;
-    padding-bottom: 12px;
-    font-size: 0.9rem;
+.category-arrow {
+    font-size: 2rem;
+    font-weight: bold;
 }
