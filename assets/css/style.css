@@ -260,3 +260,22 @@ ul {
         cursor: pointer;
     }
 }
+
+/* button global */
+.cta-button {
+    display: inline-block;
+    padding: 12px 28px;
+    background-color: var(--button-bg-color);
+    border: 2px solid var(--button-border-color);
+    color: var(--primary-color);
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+.cta-button:hover {
+    background-color: var(--primary-color);
+    color: var(--background-color);
+}

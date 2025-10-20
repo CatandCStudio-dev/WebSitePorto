@@ -1,0 +1,146 @@
+/* assets/css/game-detail.css */
+
+/*
+* File ini berisi styling khusus untuk halaman detail proyek game.
+* Tujuannya adalah untuk menyajikan informasi game secara jelas dan menarik.
+*/
+
+/* Memberi jarak atas pada section utama agar tidak tertutup navbar */
+.game-detail-section {
+    padding-top: 150px;
+    padding-bottom: 100px;
+}
+
+/* Styling untuk judul utama game */
+.game-hero {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.game-title {
+    font-size: 3rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--primary-color);
+}
+
+.game-subtitle {
+    font-size: 1.2rem;
+    color: var(--secondary-color);
+    margin-top: 10px;
+}
+
+/* Layout utama (media di kiri, info di kanan) */
+/* .game-content-layout {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+} */
+
+
+.game-content-layout {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+    width: 100%;
+    padding: 0 10%;
+    box-sizing: border-box;
+}
+
+.game-media {
+    flex: 2; /* Kolom media lebih besar */
+}
+
+.game-media img {
+    width: 100%;
+    border-radius: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.game-info {
+    flex: 1; /* Kolom info lebih kecil */
+}
+
+.game-info h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.game-info p {
+    color: var(--secondary-color);
+    line-height: 1.7;
+    margin-bottom: 15px;
+}
+
+.game-info h3 {
+    font-size: 1.5rem;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    border-left: 4px solid var(--primary-color);
+    padding-left: 10px;
+}
+
+.key-details {
+    list-style: none;
+    padding: 0;
+}
+
+.key-details li {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    color: var(--secondary-color);
+}
+
+.key-details li strong {
+    color: var(--primary-color);
+}
+
+/* Tombol CTA */
+.cta-button {
+    display: inline-block; /* Agar margin-top berfungsi */
+    margin-top: 30px;
+}
+
+
+/* Styling untuk galeri */
+.game-gallery {
+    margin-top: 80px;
+}
+
+.game-gallery h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.gallery-grid img {
+    width: 100%;
+    border-radius: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.gallery-grid img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Penyesuaian untuk layar kecil (Mobile) */
+@media (max-width: 992px) {
+    .game-content-layout {
+        flex-direction: column; /* Ubah layout menjadi vertikal */
+    }
+
+    .game-title {
+        font-size: 2.2rem;
+    }
+}
