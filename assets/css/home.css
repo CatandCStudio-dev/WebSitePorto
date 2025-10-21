@@ -260,7 +260,7 @@
         transparent 70%, 
         var(--section-bg) 100%
     );
-    z-index: 4; /* Atur lapisan di atas gambar tapi di bawah teks */
+    z-index: 5; /* Atur lapisan di atas gambar tapi di bawah teks */
 }
 
 .slide .item:nth-child(3) {
