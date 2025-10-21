@@ -247,6 +247,7 @@
     inset: 0;
     background: rgba(0, 0, 0, 0.4);
     z-index: 3;
+    pointer-events: none;
 }
 
 .project-section::before {
@@ -260,7 +261,8 @@
         transparent 70%, 
         var(--section-bg) 100%
     );
-    z-index: 4; /* Atur lapisan di atas gambar tapi di bawah teks */
+    z-index: 5;
+    pointer-events: none; /* Memastikan overlay tidak menghalangi interaksi */
 }
 
 .slide .item:nth-child(3) {
@@ -286,8 +288,9 @@
     color: #eee;
     transform: translate(0, -50%);
     display: none;
-    z-index: 5; /* Konten harus berada di paling atas */
+    z-index: 10; /* Meningkatkan z-index agar di atas overlay */
     text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+    pointer-events: auto; /* Memastikan elemen bisa diinteraksi */
 }
 
 .slide .item:nth-child(2) .content {
@@ -309,12 +312,30 @@
     animation: animate 1s ease-in-out 0.3s 1 forwards;
 }
 
-.content button {
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
+.content a {
+    display: inline-block;
+    position: relative;
+    z-index: 15;
     opacity: 0;
     animation: animate 1s ease-in-out 0.6s 1 forwards;
+    text-decoration: none;
+}
+
+.content button {
+    padding: 10px 20px;
+    border: 2px solid var(--primary-color);
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--primary-color);
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    pointer-events: auto;
+}
+
+.content button:hover {
+    background: var(--primary-color);
+    color: var(--section-bg);
 }
 
 @keyframes animate {
