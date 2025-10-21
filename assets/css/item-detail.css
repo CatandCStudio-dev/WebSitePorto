@@ -1,0 +1,209 @@
+/* assets/css/item-detail.css */
+
+/*
+* File ini berisi styling khusus untuk halaman detail proyek item.
+* Tujuannya adalah untuk menyajikan informasi item secara jelas dan menarik.
+*/
+
+/* Memberi jarak atas pada section utama agar tidak tertutup navbar */
+.item-detail-section {
+    padding-top: 150px;
+    padding-bottom: 100px;
+}
+
+/* Styling untuk judul utama item */
+.item-hero {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.item-title {
+    font-size: 3rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--primary-color);
+}
+
+.item-subtitle {
+    font-size: 1.2rem;
+    color: var(--secondary-color);
+    margin-top: 10px;
+}
+
+/* Layout utama (media di kiri, info di kanan) */
+.item-content-layout-vert {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+.item-content-layout {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+    width: 100%;
+    padding: 0 10%;
+    box-sizing: border-box;
+}
+
+.item-media {
+    flex: 2; /* Kolom media lebih besar */
+}
+
+.item-media img,
+.item-media video {
+    width: 100%;
+    border-radius: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.item-info {
+    flex: 1; /* Kolom info lebih kecil */
+}
+
+.item-info h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.item-info p {
+    color: var(--secondary-color);
+    line-height: 1.7;
+    margin-bottom: 15px;
+}
+
+.item-info h3 {
+    font-size: 1.5rem;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    border-left: 4px solid var(--primary-color);
+    padding-left: 10px;
+}
+
+.key-details {
+    list-style: none;
+    padding: 0;
+}
+
+.key-details li {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    color: var(--secondary-color);
+}
+
+.key-details li strong {
+    color: var(--primary-color);
+}
+
+/* Tombol CTA */
+.cta-button {
+    display: inline-block; /* Agar margin-top berfungsi */
+    margin-top: 30px;
+}
+
+
+/* Styling untuk galeri */
+.item-gallery {
+    margin-top: 80px;
+}
+
+.item-gallery h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.gallery-grid img {
+    width: 100%;
+    border-radius: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.gallery-grid img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Penyesuaian untuk layar kecil (Mobile) */
+@media (max-width: 992px) {
+    .item-content-layout,
+    .item-content-layout-vert {
+        flex-direction: column; /* Ubah layout menjadi vertikal */
+    }
+
+    .item-title {
+        font-size: 2.2rem;
+    }
+}
+
+.lightbox-overlay {
+    display: none; /* Sembunyi secara default */
+    position: fixed;
+    z-index: 9998; /* Di atas segalanya */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    align-items: center;
+    justify-content: center;
+}
+
+.lightbox-overlay.visible {
+    display: flex; /* Tampilkan saat aktif */
+}
+
+.lightbox-content {
+    margin: auto;
+    display: block;
+    max-width: 80%;
+    max-height: 80vh;
+    border-radius: 8px;
+    animation: zoomIn 0.3s ease-in-out;
+}
+
+/* Animasi zoom saat gambar muncul */
+@keyframes zoomIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+    z-index: 9999;
+}
+
+.lightbox-close:hover,
+.lightbox-close:focus {
+    color: #bbb;
+    text-decoration: none;
+}

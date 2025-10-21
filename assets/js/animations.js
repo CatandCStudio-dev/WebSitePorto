@@ -220,12 +220,18 @@ const initializeProjectSlider = () => {
  */
 
 const initializeAboutSlider = () => {
-    // Fungsi ini sekarang diinisialisasi langsung di dalam DOMContentLoaded di atas
     const profilesContainer = document.querySelector('.about-profiles');
     const profiles = document.querySelectorAll('.about-profile');
     const prevBtn = document.querySelector('.prev-btn');
     const nextBtn = document.querySelector('.next-btn');
     let currentIndex = 0;
+
+    // ✅ TAMBAHKAN PENGECEKAN INI
+    // Hentikan fungsi jika elemen slider tidak ditemukan di halaman ini
+    if (!profilesContainer || !prevBtn || !nextBtn || profiles.length === 0) {
+        return; 
+    }
+    // ✅ AKHIR TAMBAHAN
 
     // Hide all profiles except the first one
     profiles.forEach((profile, index) => {
@@ -255,6 +261,41 @@ const initializeAboutSlider = () => {
     nextBtn.addEventListener('click', () => {
         currentIndex = currentIndex < profiles.length - 1 ? currentIndex + 1 : 0;
         updateSlider();
+    });
+};
+
+const initializeGalleryLightbox = () => {
+    const galleryImages = document.querySelectorAll('.gallery-grid img');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const closeBtn = document.querySelector('.lightbox-close');
+
+    // Cek apakah semua elemen ada
+    if (!lightbox || !lightboxImg || !closeBtn || galleryImages.length === 0) {
+        return; // Hentikan jika elemen tidak ditemukan
+    }
+
+    galleryImages.forEach(img => {
+        img.addEventListener('click', (e) => {
+            e.preventDefault(); // Mencegah perilaku default (jika gambar adalah link)
+            lightbox.classList.add('visible'); // Tampilkan overlay
+            lightboxImg.src = img.src; // Set gambar di lightbox
+        });
+    });
+
+    // Fungsi untuk menutup lightbox
+    const closeLightbox = () => {
+        lightbox.classList.remove('visible');
+    };
+
+    // Tutup saat klik tombol close (X)
+    closeBtn.addEventListener('click', closeLightbox);
+
+    // Tutup saat klik di luar gambar (di area overlay gelap)
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+            closeLightbox();
+        }
     });
 };
 
@@ -304,5 +345,6 @@ document.addEventListener('DOMContentLoaded', () => {
     createCatFootprintOnClick();
     initializeProjectSlider();
     initializeAboutSlider();
+    initializeGalleryLightbox();
     // initializeSmoothSnapScroll()
 });
