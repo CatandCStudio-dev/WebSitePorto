@@ -142,7 +142,8 @@ const createCatFootprintOnClick = () => {
     window.addEventListener('click', (event) => {
         // Membuat elemen gambar baru setiap kali ada klik
         const footprint = document.createElement('img');
-        footprint.src = '/assets/media/catfootprint32.png';
+        //footprint.src = 'assets/media/catfootprint32.png';
+        footprint.src = basePath + 'assets/media/catfootprint32.png';
 
         // Menghitung rotasi acak antara -12 dan +12 derajat
         const randomRotation = Math.random() * 32 - 16;
