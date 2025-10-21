@@ -260,7 +260,7 @@
         transparent 70%, 
         var(--section-bg) 100%
     );
-    z-index: 5; /* Atur lapisan di atas gambar tapi di bawah teks */
+    z-index: 4; /* Atur lapisan di atas gambar tapi di bawah teks */
 }
 
 .slide .item:nth-child(3) {
@@ -377,6 +377,9 @@
     margin-bottom: 1rem;
 }
 
+/* Utility: hide mobile-only blocks by default (desktop) */
+.mobile-only { display: none; }
+
 /* Update media query untuk responsiveness */
 @media (max-width: 768px) {
     .about-content {
@@ -389,7 +392,7 @@
 }
 
 .about-profile {
-    display: flex;
+    display: true;
     flex-direction: column;
     align-items: flex-start;
     margin: 100px auto;
@@ -397,7 +400,7 @@
     padding-top: 150px;
     max-width: 1200px;
     position: relative;
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    border: none; /* removed per request: no visible border on profile cards */
     border-radius: 16px;
     color: var(--secondary-color);
     text-align: left;
@@ -432,12 +435,13 @@
 }
 
 .profile-header {
-    font-size: 5rem;
+    font-size: 7rem;
     font-weight: 900;
     color: var(--primary-color);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0;
     text-transform: uppercase;
     line-height: 1;
+    letter-spacing: 2px;
 }
 
 .profile-title {
@@ -455,13 +459,6 @@
     width: 300px;
 }
 
-.profile-row {
-    display: flex;
-    margin-bottom: 1.5rem;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-}
 
 .profile-label {
     color: var(--secondary-color);
@@ -566,23 +563,95 @@
         padding: 30px;
         padding-top: 100px;
         align-items: center; /* REFINEMENT: Ensure content block is centered */
+        /* Make the about card use normal document flow on mobile so absolutely positioned
+           images on desktop don't overlap the card content. */
+        position: relative; /* ensure border encloses children when image becomes static */
+    }
+      /* Ensure the card stacks vertically on mobile so header, image, and value appear
+       in a predictable column regardless of character artwork size */
+    .about-profile {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center;
+        padding-top: 40px; /* reduce top padding for mobile */
     }
 
-    .profile-image {
-        top: -100px;
-        right: 50%;
-        transform: translateX(50%);
-        width: 300px;
-        height: 400px;
+    /* Ensure the card stacks vertically on mobile so header, image, and value appear
+       in a predictable column regardless of character artwork size */
+    .about-profile {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center;
+        padding-top: 40px; /* reduce top padding for mobile */
+        width: 60%; /* responsive width for different artwork */
+        min-width: 100% !important;
+        box-sizing: border-box;
+        padding-left: 18px;
+        padding-right: 18px;
     }
+
+    /* Limit image height so very tall artwork doesn't push content out of viewport */
+    .profile-image img {
+        max-height: 50vh;
+        width: auto;
+        max-width: 90%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+    }
+    /* On mobile, place the profile image inside the card flow so it no longer overlaps text.
+       Use order to optionally put it above or below the text. Default: image above the header. */
+    .profile-image {
+        position: relative; /* was absolute on desktop; make it static/relative on mobile */
+        top: auto;
+        right: auto;
+        transform: none;
+        width: 60%; /* responsive width for different artwork */
+        max-width: 320px; /* cap width to avoid overflow */
+        height: auto; /* let aspect ratio be preserved */
+        margin: 0 auto 20px auto; /* center and add spacing */
+        order: -1; /* place image before the text/content */
+        z-index: 2;
+        pointer-events: none;
+    }
+
+    /* Limit image height so very tall artwork doesn't push content out of viewport */
+    .profile-image img {
+        max-height: 50vh;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+    }
+
+    /* Hide any overflow from the slider container on mobile so images don't bleed out */
+    .about-profile-slider { overflow: hidden; }
+    .about-profiles { align-items: center; }
 
     .profile-content {
         padding-right: 0;
         text-align: center;
+        /* Ensure content stacks below the image when order is used */
+        order: 0;
     }
 
+    /* Utility classes to control visibility of duplicated elements */
+    .mobile-only { display: block !important; }
+    .desktop-only { display: none !important; }
+
+    /* Hide original details block on mobile to avoid duplicated descriptions */
+    .profile-details { display: none; }
+
+    /* Ensure the order: header (mobile-only) -> image -> value (mobile-only) */
+    .profile-header.mobile-only { order: -2; margin-top: 0; }
+    .profile-image { order: -1; }
+    .profile-value.mobile-only { order: 1; margin-top: 12px; }
+
     .profile-header {
-        font-size: 3rem;
+        font-size: 4rem;
     }
     .profile-details {
         width: 100%;
@@ -624,9 +693,11 @@
     .team-member {
         padding-left: 5%;
         text-align: left;
+        order: 1;
     }
     .member-name {
         font-size: 2rem;
+        font-weight: bold;
     }
     .member-bio {
         max-width: 100%;
