@@ -67,25 +67,24 @@
     position: absolute;
     inset: 0;
     background: linear-gradient(to top, var(--section-bg) 5%, transparent 50%);
-    z-index: 0;
+    z-index: 1; /* REVISI: Tarik efek gradasi ke depan (dari 0 ke 1) */
 }
 
 .hero-video {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ini kunci utama agar video mekar memenuhi layar sempurna */
+    z-index: 0;
     filter: brightness(50%);
+    max-width: none; /* Mematikan limitasi bawaan dari Tailwind */
 }
 
 .hero-content {
     padding-left: 12rem;
-    z-index: 1;
+    z-index: 2; /* REVISI: Pastikan teks paling depan (dari 1 ke 2) */
 }
 
 .hero-content h1 {
@@ -100,17 +99,6 @@
 /* ====================================================================== */
 /* ====== PERUBAHAN UTAMA: Membuat Section Menjadi Full Screen ====== */
 /* ====================================================================== */
-/* .services-section,
-.about-section,
-.contact-section {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-    background-color: var(--section-bg);
-} */
 
 .services-section,
 .about-section,
@@ -120,7 +108,6 @@
 
 
 /* ====== Services Section ===== */
-/* .services-section sudah di-handle oleh rule di atas */
 
 .services-grid {
     display: grid;
@@ -421,7 +408,7 @@
     padding-top: 150px;
     max-width: 1200px;
     position: relative;
-    border: none; /* removed per request: no visible border on profile cards */
+    border: none; 
     border-radius: 16px;
     color: var(--secondary-color);
     text-align: left;
@@ -583,37 +570,31 @@
         margin: 60px auto;
         padding: 30px;
         padding-top: 100px;
-        align-items: center; /* REFINEMENT: Ensure content block is centered */
-        /* Make the about card use normal document flow on mobile so absolutely positioned
-           images on desktop don't overlap the card content. */
-        position: relative; /* ensure border encloses children when image becomes static */
+        align-items: center; 
+        position: relative; 
     }
-      /* Ensure the card stacks vertically on mobile so header, image, and value appear
-       in a predictable column regardless of character artwork size */
+    
     .about-profile {
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
         text-align: center;
-        padding-top: 40px; /* reduce top padding for mobile */
+        padding-top: 40px; 
     }
 
-    /* Ensure the card stacks vertically on mobile so header, image, and value appear
-       in a predictable column regardless of character artwork size */
     .about-profile {
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
         text-align: center;
-        padding-top: 40px; /* reduce top padding for mobile */
-        width: 60%; /* responsive width for different artwork */
+        padding-top: 40px; 
+        width: 60%; 
         min-width: 100% !important;
         box-sizing: border-box;
         padding-left: 18px;
         padding-right: 18px;
     }
 
-    /* Limit image height so very tall artwork doesn't push content out of viewport */
     .profile-image img {
         max-height: 50vh;
         width: auto;
@@ -622,23 +603,21 @@
         display: block;
         margin: 0 auto;
     }
-    /* On mobile, place the profile image inside the card flow so it no longer overlaps text.
-       Use order to optionally put it above or below the text. Default: image above the header. */
+    
     .profile-image {
-        position: relative; /* was absolute on desktop; make it static/relative on mobile */
+        position: relative; 
         top: auto;
         right: auto;
         transform: none;
-        width: 60%; /* responsive width for different artwork */
-        max-width: 320px; /* cap width to avoid overflow */
-        height: auto; /* let aspect ratio be preserved */
-        margin: 0 auto 20px auto; /* center and add spacing */
-        order: -1; /* place image before the text/content */
+        width: 60%; 
+        max-width: 320px; 
+        height: auto; 
+        margin: 0 auto 20px auto; 
+        order: -1; 
         z-index: 2;
         pointer-events: none;
     }
 
-    /* Limit image height so very tall artwork doesn't push content out of viewport */
     .profile-image img {
         max-height: 50vh;
         width: 100%;
@@ -648,25 +627,20 @@
         margin: 0 auto;
     }
 
-    /* Hide any overflow from the slider container on mobile so images don't bleed out */
     .about-profile-slider { overflow: hidden; }
     .about-profiles { align-items: center; }
 
     .profile-content {
         padding-right: 0;
         text-align: center;
-        /* Ensure content stacks below the image when order is used */
         order: 0;
     }
 
-    /* Utility classes to control visibility of duplicated elements */
     .mobile-only { display: block !important; }
     .desktop-only { display: none !important; }
 
-    /* Hide original details block on mobile to avoid duplicated descriptions */
     .profile-details { display: none; }
 
-    /* Ensure the order: header (mobile-only) -> image -> value (mobile-only) */
     .profile-header.mobile-only { order: -2; margin-top: 0; }
     .profile-image { order: -1; }
     .profile-value.mobile-only { order: 1; margin-top: 12px; }
@@ -741,7 +715,7 @@
 /* =========================================== */
 /* ======= Styling untuk Contact Section ====== */
 /* =========================================== */
-/* .contact-section sudah di-handle oleh rule di atas */
+
 .contact-content {
     max-width: 1000px;
     margin: 0 auto;
