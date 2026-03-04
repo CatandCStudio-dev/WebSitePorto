@@ -1,0 +1,57 @@
+/* assets/css/projects.css */
+
+/*
+* File ini berisi styling khusus untuk halaman portfolio.
+* Tujuannya adalah memberikan jarak yang pas antara header dan konten utama,
+* serta menata tampilan daftar kategori proyek.
+*/
+
+/* Gaya untuk judul section agar konsisten dengan halaman utama */
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-bottom: 60px;
+    color: var(--primary-color);
+}
+
+/* Memberi jarak atas pada section utama agar tidak tertutup navbar */
+main .project-section {
+    padding-top: 150px;
+    padding-bottom: 100px;
+}
+
+/* ✅ STYLING BARU UNTUK DAFTAR KATEGORI */
+.project-category-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Jarak antar item kategori */
+}
+
+.category-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem; /* Padding agar terasa luas */
+    background-color: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    text-decoration: none;
+    color: var(--primary-color);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.category-item:hover {
+    background-color: #3b3b57; /* Warna latar saat di-hover */
+    transform: translateX(10px); /* Efek geser ke kanan saat di-hover */
+}
+
+.category-name {
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.category-arrow {
+    font-size: 2rem;
+    font-weight: bold;
+}
