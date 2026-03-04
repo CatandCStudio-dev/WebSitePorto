@@ -1,7 +1,27 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function Home() {
+  // ==========================================
+  // 0. LOGIKA PRELOADER (Mencegah Raw Text Flash)
+  // ==========================================
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const handleLoad = () => {
+      // Delay 800ms agar transisi kopi berdenyut terlihat estetik
+      setTimeout(() => setIsLoading(false), 800);
+    };
+
+    // Cek jika halaman sudah terload sepenuhnya (termasuk CSS & Video)
+    if (document.readyState === 'complete') {
+      handleLoad();
+    } else {
+      window.addEventListener('load', handleLoad);
+      return () => window.removeEventListener('load', handleLoad);
+    }
+  }, []);
+
   // ==========================================
   // 1. STATE & LOGIKA: PROJECT SLIDER
   // ==========================================
@@ -74,10 +94,29 @@ export default function Home() {
   };
 
   // ==========================================
-  // RENDER HALAMAN
+  // RENDER PRELOADER
+  // ==========================================
+  if (isLoading) {
+    return (
+      <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#141E30]">
+        <div className="relative">
+          <div className="text-6xl text-white animate-bounce">
+            <i className="bi bi-cup-hot-fill"></i>
+          </div>
+          <div className="mt-4 h-1 w-12 bg-white/20 rounded-full blur-sm animate-pulse mx-auto"></div>
+        </div>
+        <p className="mt-6 text-white font-bold tracking-[0.2em] text-sm animate-pulse">
+          JANGAN LUPA NGOPI...
+        </p>
+      </div>
+    );
+  }
+
+  // ==========================================
+  // RENDER HALAMAN UTAMA
   // ==========================================
   return (
-    <>
+    <div className="animate-in fade-in duration-700">
       {/* 1. HERO SECTION */}
       <section id="home" className="hero-section">
         <video autoPlay loop muted playsInline className="hero-video">
@@ -126,7 +165,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 3. PROJECTS SECTION (SLIDER) */}
+      {/* 3. PROJECTS SECTION */}
       <section id="projects" className="project-section">
         <div className="project-container">
           <h2 className="section-title">PROJECT CATEGORIES</h2>
@@ -150,14 +189,13 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 4. ABOUT US SECTION (PROFIL TIM) */}
+      {/* 4. ABOUT US SECTION */}
       <section id="about" className="about-section">
         <div className="container">
           <h2 className="section-title">ABOUT US</h2>
           <div className="about-content">
             <div className="about-text">
-              <p>Cat and Coffee Studio adalah sebuah studio kreatif yang berfokus pada pengembangan teknologi dan desain inovatif. Kami percaya bahwa ide-ide terbaik lahir dari kombinasi kreativitas dan teknologi mutakhir.</p>
-              <p>Bergabunglah dengan kami dalam perjalanan menciptakan masa depan yang lebih cerah dan penuh warna!</p>
+              <p>Cat and Coffee Studio adalah sebuah studio kreatif yang berfokus pada pengembangan teknologi dan desain inovatif.</p>
             </div>
           </div>
         </div>
@@ -166,21 +204,19 @@ export default function Home() {
           <button className="slider-btn prev-btn" onClick={handlePrevAbout}>
             <i className="bi bi-chevron-left"></i>
           </button>
-
           <div className="about-profiles" style={{ transform: `translateX(-${currentAboutIndex * 100}%)` }}>
             {aboutProfiles.map((profile, index) => (
-              <div key={index} className="about-profile" style={{ opacity: currentAboutIndex === index ? 1 : 0 }}>
+              <div key={index} className={`about-profile ${currentAboutIndex === index ? 'opacity-100' : 'opacity-0'}`}>
                 <div className="profile-content">
                   <h1 className="profile-header">{profile.name}</h1>
                   <div className="profile-title">{profile.role}</div>
                 </div>
                 <div className="profile-image">
-                  <img src={profile.img} alt={`${profile.name} Profile`} />
+                  <img src={profile.img} alt={profile.name} />
                 </div>
               </div>
             ))}
           </div>
-
           <button className="slider-btn next-btn" onClick={handleNextAbout}>
             <i className="bi bi-chevron-right"></i>
           </button>
@@ -192,55 +228,27 @@ export default function Home() {
         <div className="container">
           <h2 className="section-title">Let's Brew Your Project</h2>
           <div className="contact-content">
-            <p className="contact-tagline">"Every great project starts with a small spark, let's brew yours."</p>
-            <br />
-            <p className="contact-description">
-              Hubungi kami dan biarkan kreativitasmu tumbuh bersama C&C Studio. Kami terbuka untuk kolaborasi, obrolan santai, atau bahkan brainstorming sambil ngopi.
-            </p>
-
             <div className="contact-cards">
-              {/* Tombol Email */}
               <a href="mailto:coffeecat0005@gmail.com" className="contact-card" onClick={handleEmailClick}>
-                <div className="icon-wrapper">
-                  <i className="bi bi-envelope-fill"></i>
-                </div>
-                <div className="contact-info">
-                  <h4>Email</h4>
-                  <p>coffeecat0005@gmail.com</p>
-                </div>
+                <div className="icon-wrapper"><i className="bi bi-envelope-fill"></i></div>
+                <div className="contact-info"><h4>Email</h4><p>coffeecat0005@gmail.com</p></div>
               </a>
-
-              {/* Tombol Instagram */}
               <a href="https://www.instagram.com/catcoffee_studio/" target="_blank" rel="noopener noreferrer" className="contact-card">
-                <div className="icon-wrapper">
-                  <i className="bi bi-instagram"></i>
-                </div>
-                <div className="contact-info">
-                  <h4>Instagram</h4>
-                  <p>catcoffee_studio</p>
-                </div>
+                <div className="icon-wrapper"><i className="bi bi-instagram"></i></div>
+                <div className="contact-info"><h4>Instagram</h4><p>catcoffee_studio</p></div>
               </a>
-
-              {/* Tombol WhatsApp */}
               <a href="https://wa.me/6285117660558" target="_blank" rel="noopener noreferrer" className="contact-card">
-                <div className="icon-wrapper">
-                  <i className="bi bi-whatsapp"></i>
-                </div>
-                <div className="contact-info">
-                  <h4>WhatsApp</h4>
-                  <p>+62 851-1766-0558</p>
-                </div>
+                <div className="icon-wrapper"><i className="bi bi-whatsapp"></i></div>
+                <div className="contact-info"><h4>WhatsApp</h4><p>+62 851-1766-0558</p></div>
               </a>
             </div>
-
             <div className="fun-fact">
               <i className="bi bi-cup-hot-fill"></i>
-              <p>Kami menjawab pesan sambil ngopi, jadi dijamin responsnya hangat dan friendly!</p>
+              <p>Kami menjawab pesan sambil ngopi, responsnya hangat dan friendly!</p>
             </div>
           </div>
         </div>
       </section>
-
-    </>
+    </div>
   );
 }
