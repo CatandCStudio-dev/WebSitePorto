@@ -8,11 +8,11 @@ export default function PuzzleData() {
   const [detailedData, setDetailedData] = useState([]);
   const [loading, setLoading] = useState(true);
   
-  // State Filter Ganda
+  // State Fitur Baru (Sama seperti ArData)
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortConfig, setSortConfig] = useState({ key: 'score', direction: 'desc' });
   const [filterStage, setFilterStage] = useState('All');
   const [filterPuzzleName, setFilterPuzzleName] = useState('All');
-  
-  // State Paginasi
   const [visibleItems, setVisibleItems] = useState(10);
 
   const fetchData = async () => {
@@ -45,9 +45,10 @@ export default function PuzzleData() {
                 id: `${doc.id}-${stageName}-${puzzleName}`,
                 playerName: playerName,
                 stage: stageName,
-                puzzleName: puzzleName, // Ekstrak nama puzzle spesifik
+                puzzleName: puzzleName,
                 duration: puzzleStats.durationSeconds || 0,
-                isSuccess: puzzleStats.isSuccess,
+                isSuccess: puzzleStats.isSuccess ? 1 : 0, // Diubah ke angka untuk sorting
+                isSuccessText: puzzleStats.isSuccess ? 'Berhasil' : 'Gagal',
                 score: puzzleStats.score || 0
               });
             });
@@ -57,7 +58,6 @@ export default function PuzzleData() {
 
       setSessionData(sessions);
       setDetailedData(details);
-
     } catch (error) {
       console.error("Gagal mengambil data:", error);
     } finally {
@@ -65,115 +65,152 @@ export default function PuzzleData() {
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  useEffect(() => { fetchData(); }, []);
 
-  // Logika Filter Berlapis (Stage DAN Puzzle Name)
-  const filteredDetails = detailedData.filter(item => {
-    const matchStage = filterStage === 'All' || item.stage === filterStage;
-    const matchPuzzle = filterPuzzleName === 'All' || item.puzzleName === filterPuzzleName;
-    return matchStage && matchPuzzle;
+  // LOGIKA PENCARIAN & FILTER
+  const filteredData = detailedData.filter(item => {
+    const matchesSearch = item.playerName.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                          item.puzzleName.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStage = filterStage === 'All' || item.stage === filterStage;
+    const matchesPuzzle = filterPuzzleName === 'All' || item.puzzleName === filterPuzzleName;
+    return matchesSearch && matchesStage && matchesPuzzle;
   });
 
-  // Terapkan batas tampilan 10 baris
-  const displayedDetails = filteredDetails.slice(0, visibleItems);
+  // LOGIKA SORTING
+  const sortedData = [...filteredData].sort((a, b) => {
+    if (sortConfig.direction === 'asc') {
+      return a[sortConfig.key] > b[sortConfig.key] ? 1 : -1;
+    }
+    return a[sortConfig.key] < b[sortConfig.key] ? 1 : -1;
+  });
 
-  // Dapatkan opsi unik untuk dropdown
+  const displayedDetails = sortedData.slice(0, visibleItems);
+
+  // Opsi Unik untuk Dropdown
   const uniqueStages = ['All', ...new Set(detailedData.map(item => item.stage))];
-  
-  // Ambil nama puzzle yang unik HANYA dari stage yang sedang dipilih
   const availablePuzzles = detailedData
     .filter(item => filterStage === 'All' || item.stage === filterStage)
     .map(item => item.puzzleName);
   const uniquePuzzleNames = ['All', ...new Set(availablePuzzles)];
 
-  const handleLoadMore = () => {
-    setVisibleItems(prev => prev + 10);
+  // FITUR DOWNLOAD CSV
+  const downloadCSV = () => {
+    const headers = ["Pemain,Stage,Puzzle,Skor,Waktu (s),Status"];
+    const rows = sortedData.map(item => 
+      `${item.playerName},${item.stage},${item.puzzleName},${item.score},${item.duration},${item.isSuccessText}`
+    );
+    const csvContent = "data:text/csv;charset=utf-8," + headers.concat(rows).join("\n");
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "data_puzzle_riset.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
-  // Reset paginasi dan filter turunan jika filter utama berubah
-  const handleStageChange = (e) => {
-    setFilterStage(e.target.value);
-    setFilterPuzzleName('All'); // Reset pilihan puzzle
-    setVisibleItems(10);
-  };
-
-  if (loading) return <div className="flex justify-center h-full text-xl font-bold">Memuat data riset...</div>;
+  if (loading) return <div className="p-10 text-center font-bold text-gray-500">Memuat data riset...</div>;
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-3xl font-bold text-gray-800">Analisis Data Puzzle</h1>
+    <div className="space-y-8 pb-12">
+      <div className="flex flex-wrap justify-between items-center gap-4">
+        <h1 className="text-3xl font-bold text-gray-800">Analisis Data Puzzle</h1>
+        <button 
+          onClick={downloadCSV}
+          className="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg flex items-center gap-2 font-bold transition-all shadow-md"
+        >
+          📥 Download CSV
+        </button>
+      </div>
 
-      <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-        <h2 className="text-xl font-bold text-gray-700 mb-4">Grafik Total Skor Permainan (Per Sesi)</h2>
-        <div className="w-full mt-4">
-          {sessionData.length > 0 ? (
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={sessionData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="playerName" />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="totalScore" fill="#3b82f6" name="Total Skor" radius={[4, 4, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          ) : (
-            <p className="text-center text-gray-500">Belum ada data skor.</p>
-          )}
+      {/* SEARCH, FILTER & SORT BOX */}
+      <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-200 space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="relative">
+            <input 
+              type="text" 
+              placeholder="Cari nama pemain atau puzzle..."
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <span className="absolute left-3 top-2.5 text-gray-400">🔍</span>
+          </div>
+
+          <select 
+            className="border border-gray-300 rounded-lg p-2 outline-none font-bold text-blue-700"
+            value={`${sortConfig.key}-${sortConfig.direction}`}
+            onChange={(e) => {
+              const [key, direction] = e.target.value.split('-');
+              setSortConfig({ key, direction });
+            }}
+          >
+            <option value="score-desc">Urutkan: Skor Tertinggi</option>
+            <option value="score-asc">Urutkan: Skor Terendah</option>
+            <option value="duration-asc">Urutkan: Waktu Tercepat</option>
+            <option value="duration-desc">Urutkan: Waktu Terlama</option>
+            <option value="isSuccess-desc">Urutkan: Status Berhasil</option>
+          </select>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-4 border-t pt-4">
+          <div className="flex items-center gap-2">
+            <label className="text-sm font-bold text-gray-600">Stage:</label>
+            <select className="border rounded p-1.5 text-sm bg-gray-50" value={filterStage} onChange={(e) => { setFilterStage(e.target.value); setFilterPuzzleName('All'); setVisibleItems(10); }}>
+              {uniqueStages.map(s => <option key={s} value={s}>{s === 'All' ? 'Semua Stage' : s}</option>)}
+            </select>
+          </div>
+          <div className="flex items-center gap-2">
+            <label className="text-sm font-bold text-gray-600">Jenis Puzzle:</label>
+            <select className="border rounded p-1.5 text-sm bg-gray-50 max-w-[200px]" value={filterPuzzleName} onChange={(e) => { setFilterPuzzleName(e.target.value); setVisibleItems(10); }}>
+              {uniquePuzzleNames.map(p => <option key={p} value={p}>{p === 'All' ? 'Semua Puzzle' : p}</option>)}
+            </select>
+          </div>
         </div>
       </div>
 
-      <div className="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
-        <div className="p-4 bg-gray-50 border-b border-gray-200 flex flex-col md:flex-row justify-between md:items-center gap-4">
-          <h2 className="text-xl font-bold text-gray-700">Rincian Metrik per Puzzle</h2>
-          
-          {/* Area Filter Ganda */}
-          <div className="flex flex-wrap items-center gap-4">
-            <div className="flex items-center gap-2">
-              <label className="font-semibold text-gray-700 text-sm">Stage:</label>
-              <select className="border p-1.5 text-sm bg-white rounded" value={filterStage} onChange={handleStageChange}>
-                {uniqueStages.map(s => <option key={s} value={s}>{s === 'All' ? 'Semua Stage' : s}</option>)}
-              </select>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <label className="font-semibold text-gray-700 text-sm">Puzzle:</label>
-              <select 
-                className="border p-1.5 text-sm bg-white rounded max-w-[200px]" 
-                value={filterPuzzleName} 
-                onChange={(e) => { setFilterPuzzleName(e.target.value); setVisibleItems(10); }}
-              >
-                {uniquePuzzleNames.map(p => <option key={p} value={p}>{p === 'All' ? 'Semua Jenis Puzzle' : p}</option>)}
-              </select>
-            </div>
-          </div>
+      {/* GRAFIK SKOR */}
+      <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+        <h2 className="text-xl font-bold text-gray-700 mb-4">Grafik Skor Permainan (Per Sesi)</h2>
+        <div className="h-64 w-full">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={sessionData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="playerName" fontSize={12} />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="totalScore" fill="#3b82f6" radius={[4, 4, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
         </div>
+      </div>
 
+      {/* TABEL RINCIAN */}
+      <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-100">
+            <thead className="bg-gray-50 text-xs font-bold text-gray-500 uppercase">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-bold text-gray-600 uppercase">Nama Pemain</th>
-                <th className="px-6 py-3 text-left text-xs font-bold text-gray-600 uppercase">Stage & Puzzle</th>
-                <th className="px-6 py-3 text-left text-xs font-bold text-gray-600 uppercase">Skor</th>
-                <th className="px-6 py-3 text-left text-xs font-bold text-gray-600 uppercase">Waktu</th>
-                <th className="px-6 py-3 text-left text-xs font-bold text-gray-600 uppercase">Status</th>
+                <th className="px-6 py-4 text-left">Nama Pemain</th>
+                <th className="px-6 py-4 text-left">Stage & Puzzle</th>
+                <th className="px-6 py-4 text-center">Skor</th>
+                <th className="px-6 py-4 text-center">Waktu</th>
+                <th className="px-6 py-4 text-center">Status</th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {displayedDetails.map((row) => (
-                <tr key={row.id}>
-                  <td className="px-6 py-4 text-sm font-medium">{row.playerName}</td>
+                <tr key={row.id} className="hover:bg-gray-50 transition-colors">
+                  <td className="px-6 py-4 text-sm font-medium text-gray-900">{row.playerName}</td>
                   <td className="px-6 py-4 text-sm">
-                    <span className="font-semibold block text-gray-800">{row.stage}</span>
-                    <span className="text-xs text-blue-600">{row.puzzleName}</span>
+                    <span className="font-bold block text-gray-800">{row.stage}</span>
+                    <span className="text-xs text-blue-600 font-semibold">{row.puzzleName}</span>
                   </td>
-                  <td className="px-6 py-4 font-bold text-blue-600">{row.score}</td>
-                  <td className="px-6 py-4 text-sm text-gray-600">{row.duration}s</td>
-                  <td className="px-6 py-4">
-                    <span className={`px-2 py-1 text-xs font-bold rounded ${row.isSuccess ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                      {row.isSuccess ? 'Berhasil' : 'Gagal'}
+                  <td className="px-6 py-4 text-sm text-center font-black text-blue-600">{row.score}</td>
+                  <td className="px-6 py-4 text-sm text-center text-gray-600">{row.duration}s</td>
+                  <td className="px-6 py-4 text-center">
+                    <span className={`px-3 py-1 text-xs font-bold rounded-full ${row.isSuccess ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                      {row.isSuccessText}
                     </span>
                   </td>
                 </tr>
@@ -181,15 +218,13 @@ export default function PuzzleData() {
             </tbody>
           </table>
         </div>
-
-        {/* Tombol Load More */}
-        {filteredDetails.length > visibleItems && (
-          <div className="p-4 border-t border-gray-200 flex justify-center bg-gray-50">
+        {sortedData.length > visibleItems && (
+          <div className="p-4 text-center bg-gray-50 border-t">
             <button 
-              onClick={handleLoadMore}
-              className="bg-blue-100 text-blue-700 hover:bg-blue-200 font-semibold py-2 px-6 rounded-md transition duration-200"
+              onClick={() => setVisibleItems(v => v + 10)} 
+              className="text-blue-600 font-bold hover:bg-blue-100 px-6 py-2 rounded-lg transition-all"
             >
-              Tampilkan Lebih Banyak ({filteredDetails.length - visibleItems} tersisa)
+              Tampilkan Lebih Banyak ({sortedData.length - visibleItems} tersisa)
             </button>
           </div>
         )}

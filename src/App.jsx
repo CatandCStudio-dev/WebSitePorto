@@ -8,6 +8,7 @@ import ProjectDetail from './pages/public/ProjectDetail';
 import Login from './pages/admin/Login';
 import Overview from './pages/admin/Overview';
 import PuzzleData from './pages/admin/PuzzleData';
+import UserData from './pages/admin/UserData';
 import ArData from './pages/admin/ArData';
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route path="/ar-historian-app/login" element={<Login />} />
         <Route path="/ar-historian-app" element={<DashboardLayout />}>
           <Route index element={<Overview />} />
+          <Route path="users" element={<UserData />} /> {/* Tambahkan Ini */}
           <Route path="puzzle" element={<PuzzleData />} />
           <Route path="ar-arkeo" element={<ArData />} />
         </Route>
