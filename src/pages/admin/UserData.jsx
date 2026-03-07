@@ -72,10 +72,11 @@ export default function UserData() {
         </div>
       </div>
 
-      <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+      {/* Tabel kini bersudut membulat dengan header Navy/Gray soft */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+          <table className="min-w-full divide-y divide-gray-100">
+            <thead className="bg-[#fcfdfd] border-b border-gray-100">
               <tr className="text-xs font-bold text-gray-500 uppercase tracking-wider">
                 <th className="px-6 py-4 text-left">Profil</th>
                 <th className="px-6 py-4 text-left">Info Akun</th>
@@ -84,7 +85,7 @@ export default function UserData() {
                 <th className="px-6 py-4 text-center bg-purple-50/50">Interaksi AI</th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-white divide-y divide-gray-50">
               {users.map((user) => (
                 <tr key={user.id} className="hover:bg-gray-50 transition-colors">
                   <td className="px-6 py-4 whitespace-nowrap">

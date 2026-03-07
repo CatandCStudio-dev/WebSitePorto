@@ -124,9 +124,10 @@ export default function ArData() {
     <div className="space-y-8 pb-12">
       <div className="flex flex-wrap justify-between items-center gap-4">
         <h1 className="text-3xl font-bold text-gray-800">Analisis AR Arkeo Nusantara</h1>
+        {/* Ubah tombol download menjadi Gold */}
         <button 
           onClick={downloadCSV}
-          className="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg flex items-center gap-2 font-bold transition-all shadow-md"
+          className="bg-[#b38b59] hover:bg-[#8f6e45] text-white px-5 py-2 rounded-xl flex items-center gap-2 font-bold transition-all shadow-md shadow-[#b38b59]/20"
         >
           📥 Download CSV
         </button>
@@ -135,10 +136,11 @@ export default function ArData() {
       {/* SEARCH & GLOBAL FILTER */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-white p-4 rounded-xl shadow-sm border border-gray-200">
         <div className="relative">
+          {/* Ubah kotak search menjadi lebih melengkung dan outline Navy */}
           <input 
             type="text" 
             placeholder="Cari pemain atau objek..."
-            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 outline-none"
+            className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#1a2b4c]/20 focus:border-[#1a2b4c] outline-none"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -179,18 +181,19 @@ export default function ArData() {
               <XAxis dataKey="name" fontSize={12} />
               <YAxis />
               <Tooltip />
-              <Bar dataKey="TotalScans" fill="#8b5cf6" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="TotalScans" fill="#1a2b4c" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
       </div>
 
       {/* TABEL RINCIAN */}
-      <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
+      {/* Tabel kini bersudut membulat dengan header Navy/Gray soft */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50 text-xs font-bold text-gray-500 uppercase">
-              <tr>
+          <table className="min-w-full divide-y divide-gray-100">
+            <thead className="bg-[#fcfdfd] border-b border-gray-100">
+              <tr className="text-xs font-bold text-gray-500 uppercase tracking-wider">
                 <th className="px-6 py-4 text-left">Pemain</th>
                 <th className="px-6 py-4 text-left">Objek AR</th>
                 <th className="px-6 py-4 text-center">Scan</th>
@@ -199,7 +202,7 @@ export default function ArData() {
                 <th className="px-6 py-4 text-center">Durasi</th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-white divide-y divide-gray-50">
               {displayedDetails.map((row) => (
                 <tr key={row.id} className="hover:bg-gray-50 transition-colors">
                   <td className="px-6 py-4 text-sm font-medium text-gray-900">{row.playerName}</td>
