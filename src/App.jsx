@@ -11,6 +11,9 @@ import PuzzleData from './pages/admin/PuzzleData';
 import UserData from './pages/admin/UserData';
 import ArData from './pages/admin/ArData';
 
+// 1. IMPORT HALAMAN 404 DI SINI
+import NotFound from './pages/public/NotFound'; 
+
 function App() {
   return (
     <Router>
@@ -27,10 +30,16 @@ function App() {
         <Route path="/ar-historian-app/login" element={<Login />} />
         <Route path="/ar-historian-app" element={<DashboardLayout />}>
           <Route index element={<Overview />} />
-          <Route path="users" element={<UserData />} /> {/* Tambahkan Ini */}
+          <Route path="users" element={<UserData />} />
           <Route path="puzzle" element={<PuzzleData />} />
           <Route path="ar-arkeo" element={<ArData />} />
         </Route>
+
+        {/* ========================================== */}
+        {/* 2. TAMBAHKAN CATCH-ALL ROUTE (404) DI SINI */}
+        {/* ========================================== */}
+        <Route path="*" element={<NotFound />} />
+
       </Routes>
     </Router>
   );
