@@ -9,9 +9,12 @@ export default defineConfig({
     react({
       babel: {
         plugins: [
-          ['babel-plugin-react-compiler'] // React compiler diletakkan di dalam Babel
+          ['babel-plugin-react-compiler']
         ],
       },
     }),
   ],
+  server: {
+    allowedHosts: true, // Mengizinkan semua host (termasuk ngrok)
+  },
 })

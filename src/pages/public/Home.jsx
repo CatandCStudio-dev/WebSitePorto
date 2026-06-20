@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import SEO from '../../components/SEO';
 
 export default function Home() {
   // ==========================================
@@ -98,7 +99,7 @@ export default function Home() {
   // ==========================================
   if (isLoading) {
     return (
-      <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#141E30]">
+      <div className="fixed inset-0 z-9999 flex flex-col items-center justify-center bg-[#141E30]">
         <div className="relative">
           <div className="text-6xl text-white animate-bounce">
             <i className="bi bi-cup-hot-fill"></i>
@@ -117,6 +118,10 @@ export default function Home() {
   // ==========================================
   return (
     <div className="animate-in fade-in duration-700">
+      <SEO 
+        title="Cat and Coffee Studio - Creative & Tech Agency" 
+        description="Studio kreatif yang berfokus pada pengembangan teknologi 3D, Desain Grafis, AI, dan Game Development."
+      />
       {/* 1. HERO SECTION */}
       <section id="home" className="hero-section">
         <video autoPlay loop muted playsInline className="hero-video">
@@ -204,18 +209,20 @@ export default function Home() {
           <button className="slider-btn prev-btn" onClick={handlePrevAbout}>
             <i className="bi bi-chevron-left"></i>
           </button>
-          <div className="about-profiles" style={{ transform: `translateX(-${currentAboutIndex * 100}%)` }}>
-            {aboutProfiles.map((profile, index) => (
-              <div key={index} className={`about-profile ${currentAboutIndex === index ? 'opacity-100' : 'opacity-0'}`}>
-                <div className="profile-content">
-                  <h1 className="profile-header">{profile.name}</h1>
-                  <div className="profile-title">{profile.role}</div>
+          <div className="overflow-hidden w-full rounded-2xl">
+            <div className="about-profiles" style={{ transform: `translateX(-${currentAboutIndex * 100}%)` }}>
+              {aboutProfiles.map((profile, index) => (
+                <div key={index} className={`about-profile transition-opacity duration-500 ${currentAboutIndex === index ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
+                  <div className="profile-content">
+                    <h1 className="profile-header">{profile.name}</h1>
+                    <div className="profile-title">{profile.role}</div>
+                  </div>
+                  <div className="profile-image">
+                    <img src={profile.img} alt={profile.name} loading="lazy" />
+                  </div>
                 </div>
-                <div className="profile-image">
-                  <img src={profile.img} alt={profile.name} />
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
           <button className="slider-btn next-btn" onClick={handleNextAbout}>
             <i className="bi bi-chevron-right"></i>
